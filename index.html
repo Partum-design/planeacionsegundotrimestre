@@ -1,0 +1,495 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reporte de avance · BIOS × Partum Design</title>
+<meta name="description" content="Corte de caja del segundo trimestre 2026: desarrollo web, identidad de marca y redes sociales para Laboratorios BIOS." />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --navy-950:#060b16;
+    --navy-900:#0a1220;
+    --navy-800:#101c31;
+    --navy-700:#182742;
+    --line:rgba(255,255,255,.09);
+    --line-strong:rgba(255,255,255,.16);
+    --bios-blue:#3b82e8;
+    --bios-blue-deep:#123a70;
+    --partum-teal:#18b4cc;
+    --partum-navy:#0c2c52;
+    --ink:#eef3fa;
+    --ink-dim:#93a4c2;
+    --ink-faint:#5c6d8c;
+    --good:#34c98d;
+    --good-dim:rgba(52,201,141,.14);
+    --warn:#f2b544;
+    --warn-dim:rgba(242,181,68,.14);
+    --critical:#ef5a6f;
+    --critical-dim:rgba(239,90,111,.14);
+    --pending-dim:rgba(147,164,194,.12);
+    --radius:14px;
+    --maxw:1180px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  @media (prefers-reduced-motion:reduce){ html{scroll-behavior:auto;} }
+
+  body{
+    margin:0;
+    background:
+      radial-gradient(ellipse 900px 500px at 15% -10%, rgba(59,130,232,.16), transparent 60%),
+      radial-gradient(ellipse 700px 500px at 100% 0%, rgba(24,180,204,.10), transparent 55%),
+      var(--navy-950);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+  }
+
+  h1,h2,h3{ font-family:'Space Grotesk', 'Inter', sans-serif; margin:0; letter-spacing:-0.01em; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+
+  .wrap{ max-width:var(--maxw); margin:0 auto; padding:0 28px; }
+
+  /* ---------- nav ---------- */
+  header.nav{
+    position:sticky; top:0; z-index:50;
+    background:rgba(6,11,22,.78);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .nav-inner{
+    max-width:var(--maxw); margin:0 auto; padding:14px 28px;
+    display:flex; align-items:center; justify-content:space-between; gap:24px;
+  }
+  .brand-lockup{ display:flex; align-items:center; gap:10px; font-size:13px; color:var(--ink-dim); }
+  .brand-lockup img{ height:20px; width:auto; }
+  .brand-x{ opacity:.5; font-size:12px; }
+  .nav-links{ display:flex; gap:22px; font-size:13.5px; color:var(--ink-dim); }
+  .nav-links a{ text-decoration:none; transition:color .15s ease; white-space:nowrap; }
+  .nav-links a:hover{ color:var(--ink); }
+  @media (max-width:760px){ .nav-links{ display:none; } }
+
+  /* ---------- pulse divider (signature element) ---------- */
+  .pulse{
+    width:100%; height:46px; overflow:hidden; position:relative;
+    -webkit-mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+    mask-image:linear-gradient(90deg, transparent, black 8%, black 92%, transparent);
+  }
+  .pulse svg{ width:200%; height:100%; display:block; }
+  .pulse path{
+    fill:none; stroke:url(#pulseGrad); stroke-width:2; stroke-linecap:round; stroke-linejoin:round;
+  }
+  .pulse-track{ animation:pulse-scroll 9s linear infinite; }
+  @media (prefers-reduced-motion:reduce){ .pulse-track{ animation:none; } }
+  @keyframes pulse-scroll{ from{ transform:translateX(0); } to{ transform:translateX(-50%); } }
+
+  /* ---------- hero ---------- */
+  .hero{ padding:76px 0 40px; }
+  .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono', monospace; font-size:12.5px; letter-spacing:.08em;
+    color:var(--bios-blue); text-transform:uppercase;
+    border:1px solid var(--bios-blue-deep); background:rgba(59,130,232,.08);
+    padding:6px 12px; border-radius:999px; margin-bottom:22px;
+  }
+  .hero h1{ font-size:clamp(32px,5vw,54px); font-weight:600; max-width:16ch; }
+  .hero .sub{ margin-top:18px; font-size:17px; color:var(--ink-dim); max-width:58ch; }
+  .hero .daterange{ margin-top:26px; display:flex; align-items:center; gap:14px; font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-faint); }
+  .daterange .dot{ width:6px;height:6px;border-radius:50%;background:var(--good); box-shadow:0 0 0 4px var(--good-dim); }
+
+  .lockup-row{
+    margin-top:44px; display:flex; align-items:center; gap:26px; flex-wrap:wrap;
+    padding:22px 26px; border:1px solid var(--line); border-radius:var(--radius);
+    background:linear-gradient(135deg, rgba(255,255,255,.03), rgba(255,255,255,0));
+  }
+  .lockup-row img.bios-mark{ height:34px; width:auto; }
+  .lockup-row img.partum-mark{ height:26px; width:auto; }
+  .lockup-x{ font-size:15px; color:var(--ink-faint); font-family:'IBM Plex Mono',monospace; }
+  .lockup-caption{ margin-left:auto; font-size:13px; color:var(--ink-faint); max-width:32ch; }
+  @media (max-width:640px){ .lockup-caption{ margin-left:0; } }
+
+  /* ---------- kpi strip ---------- */
+  .kpi-strip{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; margin-top:40px; }
+  .kpi{ background:var(--navy-900); padding:24px 26px; }
+  .kpi .val{ font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:600; }
+  .kpi .val .unit{ font-size:17px; color:var(--ink-faint); font-weight:500; }
+  .kpi .lbl{ margin-top:6px; font-size:13px; color:var(--ink-dim); }
+  @media (max-width:760px){ .kpi-strip{ grid-template-columns:1fr; } }
+
+  /* ---------- sections ---------- */
+  section{ padding:64px 0; }
+  section + section{ border-top:1px solid var(--line); }
+  .section-head{ margin-bottom:36px; max-width:62ch; }
+  .section-num{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint); letter-spacing:.06em; margin-bottom:10px; }
+  .section-head h2{ font-size:clamp(24px,3vw,32px); font-weight:600; }
+  .section-head .sub{ margin-top:10px; font-size:15px; color:var(--ink-dim); }
+
+  /* status chip */
+  .chip{ display:inline-flex; align-items:center; gap:6px; font-size:12px; font-family:'IBM Plex Mono',monospace; padding:4px 10px; border-radius:999px; white-space:nowrap; }
+  .chip.done{ background:var(--good-dim); color:var(--good); }
+  .chip.paused{ background:var(--warn-dim); color:var(--warn); }
+  .chip.pending{ background:var(--pending-dim); color:var(--ink-dim); }
+
+  /* tech pipeline */
+  .pipeline{ display:flex; flex-direction:column; gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .pipe-row{ background:var(--navy-900); padding:20px 24px; display:flex; align-items:center; gap:18px; flex-wrap:wrap; }
+  .pipe-row .name{ font-weight:600; font-size:15.5px; min-width:230px; }
+  .pipe-row .desc{ font-size:13.5px; color:var(--ink-dim); flex:1; min-width:220px; }
+
+  .callout{ margin-top:24px; padding:18px 22px; border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--warn-dim); }
+  .callout .callout-lbl{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--warn); text-transform:uppercase; letter-spacing:.06em; margin-bottom:8px; }
+  .callout ul{ margin:0; padding-left:18px; font-size:14.5px; color:var(--ink); display:grid; grid-template-columns:1fr 1fr; gap:6px 20px; }
+  @media (max-width:600px){ .callout ul{ grid-template-columns:1fr; } }
+
+  /* design deliverables grid */
+  .deliv-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(230px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .deliv{ background:var(--navy-900); padding:18px 20px; display:flex; align-items:flex-start; gap:12px; }
+  .deliv .badge{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--bios-blue); border:1px solid var(--bios-blue-deep); background:rgba(59,130,232,.08); width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .deliv .txt{ font-size:14px; padding-top:3px; }
+  .deliv .check{ margin-left:auto; color:var(--good); font-size:14px; }
+
+  /* stat tiles (redes) */
+  .stat-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .stat{ background:var(--navy-900); padding:22px 22px; }
+  .stat .lbl{ font-size:13px; color:var(--ink-dim); }
+  .stat .val{ margin-top:8px; font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:600; }
+  .stat .trend{ margin-top:6px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; display:inline-flex; align-items:center; gap:4px; }
+  .stat .trend.up{ color:var(--good); }
+  .stat .trend.down{ color:var(--critical); }
+  @media (max-width:760px){ .stat-grid{ grid-template-columns:repeat(2,1fr); } }
+  @media (max-width:460px){ .stat-grid{ grid-template-columns:1fr; } }
+
+  .meta-row{ margin-top:22px; display:flex; gap:28px; flex-wrap:wrap; font-size:13.5px; color:var(--ink-dim); }
+  .meta-row strong{ color:var(--ink); font-weight:600; }
+
+  /* reviews */
+  .rev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(260px,1fr)); gap:1px; background:var(--line); border:1px solid var(--line); border-radius:var(--radius); overflow:hidden; }
+  .rev{ background:var(--navy-900); padding:20px 22px; }
+  .rev .loc{ font-weight:600; font-size:14.5px; }
+  .rev .place{ font-size:12.5px; color:var(--ink-faint); margin-top:2px; }
+  .rev .rating{ margin-top:14px; display:flex; align-items:baseline; gap:8px; }
+  .rev .rating .num{ font-family:'Space Grotesk',sans-serif; font-size:22px; font-weight:600; color:var(--warn); }
+  .rev .rating .count{ font-size:12.5px; color:var(--ink-faint); }
+  .rev .bar{ margin-top:10px; height:4px; border-radius:4px; background:rgba(255,255,255,.08); overflow:hidden; }
+  .rev .bar span{ display:block; height:100%; border-radius:4px; background:linear-gradient(90deg, var(--partum-navy), var(--warn)); }
+  .rev .nodata{ margin-top:14px; font-size:12.5px; color:var(--ink-faint); font-style:italic; }
+  .rev a.link{ margin-top:14px; display:inline-block; font-size:12px; color:var(--bios-blue); text-decoration:none; font-family:'IBM Plex Mono',monospace; }
+  .rev a.link:hover{ text-decoration:underline; }
+
+  .insight{ margin-top:24px; padding:18px 22px; border-left:3px solid var(--bios-blue); background:rgba(59,130,232,.06); border-radius:0 var(--radius) var(--radius) 0; font-size:14.5px; color:var(--ink); }
+  .footnote{ margin-top:16px; font-size:12px; color:var(--ink-faint); }
+
+  /* next quarter */
+  .next-card{
+    border:1px solid var(--line-strong); border-radius:20px; padding:40px 42px;
+    background:linear-gradient(135deg, rgba(59,130,232,.10), rgba(24,180,204,.06));
+    position:relative; overflow:hidden;
+  }
+  .next-card .section-num{ color:var(--bios-blue); }
+  .next-card p{ font-size:18px; line-height:1.65; max-width:64ch; color:var(--ink); margin:0; }
+  .next-card .tags{ margin-top:26px; display:flex; gap:10px; flex-wrap:wrap; }
+  .next-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:12px; padding:5px 12px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-dim); }
+
+  /* footer */
+  footer{ padding:48px 0 60px; }
+  .footer-inner{ display:flex; justify-content:space-between; align-items:center; flex-wrap:wrap; gap:24px; }
+  .footer-lockup{ display:flex; align-items:center; gap:18px; }
+  .footer-lockup img.bios-mark{ height:24px; }
+  .footer-lockup img.partum-mark{ height:19px; }
+  footer .fine{ font-size:12.5px; color:var(--ink-faint); }
+  footer .fine a{ color:var(--bios-blue); text-decoration:none; }
+
+  ::selection{ background:rgba(59,130,232,.35); }
+  :focus-visible{ outline:2px solid var(--bios-blue); outline-offset:3px; }
+</style>
+</head>
+<body>
+
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="pulseGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#123a70"/>
+      <stop offset="50%" stop-color="#3b82e8"/>
+      <stop offset="100%" stop-color="#18b4cc"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="brand-lockup">
+      <img src="assets/partum-logo-white.png" alt="Partum Design" style="height:16px;opacity:.9" />
+      <span class="brand-x">×</span>
+      <img src="assets/bios-logo-white.png" alt="Laboratorios BIOS" style="height:18px;opacity:.9" />
+    </div>
+    <nav class="nav-links">
+      <a href="#resumen">Resumen</a>
+      <a href="#tecnologia">Tecnología</a>
+      <a href="#diseno">Diseño</a>
+      <a href="#redes">Redes</a>
+      <a href="#reputacion">Reputación</a>
+      <a href="#siguiente">Próximo trimestre</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="hero" id="resumen">
+    <span class="eyebrow">Partum Design × Laboratorios BIOS</span>
+    <h1>Reporte de avance del segundo trimestre</h1>
+    <p class="sub">Corte de caja de lo entregado en desarrollo web, identidad de marca y redes sociales, y hacia dónde va el trabajo en los próximos meses.</p>
+    <div class="daterange"><span class="dot"></span> 05 MAY 2026 → 05 AGO 2026 · 12 SEMANAS · 3 ÁREAS</div>
+
+    <div class="lockup-row">
+      <img class="bios-mark" src="assets/bios-logo-white.png" alt="Laboratorios BIOS" />
+      <span class="lockup-x">×</span>
+      <img class="partum-mark" src="assets/partum-logo-white.png" alt="Partum Design" />
+      <span class="lockup-caption">Así hemos trabajado este trimestre: un equipo, tres frentes, un mismo calendario.</span>
+    </div>
+
+    <div class="kpi-strip">
+      <div class="kpi"><div class="val">100<span class="unit">%</span></div><div class="lbl">Frontend del sitio, completado</div></div>
+      <div class="kpi"><div class="val">14<span class="unit">/18</span></div><div class="lbl">Piezas de diseño entregadas</div></div>
+      <div class="kpi"><div class="val">8.9<span class="unit">mil</span></div><div class="lbl">Visualizaciones en Facebook, últimos 90 días</div></div>
+    </div>
+  </section>
+
+  <div class="pulse" aria-hidden="true">
+    <svg viewBox="0 0 800 46" preserveAspectRatio="none">
+      <g class="pulse-track">
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L460,23 L475,23 L485,4 L495,42 L505,23 L520,23 L800,23"/>
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L460,23 L475,23 L485,4 L495,42 L505,23 L520,23 L800,23" transform="translate(800,0)"/>
+      </g>
+    </svg>
+  </div>
+
+  <section id="tecnologia">
+    <div class="section-head">
+      <div class="section-num">01 · TECNOLOGÍA</div>
+      <h2>Desarrollo web y sistemas</h2>
+      <p class="sub">El sitio ya está en pie. Lo que falta depende de una decisión externa antes de poder avanzar.</p>
+    </div>
+
+    <div class="pipeline">
+      <div class="pipe-row">
+        <span class="name">Frontend del sitio</span>
+        <span class="desc">Home, catálogo de servicios, cotizador, pop-ups y canales de contacto, maquetados y publicados.</span>
+        <span class="chip done">✓ Completado</span>
+      </div>
+      <div class="pipe-row">
+        <span class="name">Conexión con el sistema (backend)</span>
+        <span class="desc">En pausa hasta definir con BIOS el proveedor del servicio de hosting e integración.</span>
+        <span class="chip paused">⏸ En pausa</span>
+      </div>
+      <div class="pipe-row">
+        <span class="name">Tarjetas de presentación corporativas digitales</span>
+        <span class="desc">Sistema de tarjetas digitales para el equipo BIOS, entregado y en uso.</span>
+        <span class="chip done">✓ Completado</span>
+      </div>
+      <div class="pipe-row">
+        <span class="name">Bot de atención con IA</span>
+        <span class="desc">Aún no se inicia; queda amarrado a la misma decisión de proveedor que el backend.</span>
+        <span class="chip pending">Pendiente</span>
+      </div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-lbl">Para destrabar el próximo trimestre</div>
+      <ul>
+        <li>Definir proveedor del servicio y retomar la conexión con el sistema</li>
+        <li>Arrancar el desarrollo del bot de atención automática con IA</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="pulse" aria-hidden="true">
+    <svg viewBox="0 0 800 46" preserveAspectRatio="none">
+      <g class="pulse-track">
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L460,23 L475,23 L485,4 L495,42 L505,23 L520,23 L800,23"/>
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L520,23 L800,23" transform="translate(800,0)"/>
+      </g>
+    </svg>
+  </div>
+
+  <section id="diseno">
+    <div class="section-head">
+      <div class="section-num">02 · DISEÑO</div>
+      <h2>Identidad de marca</h2>
+      <p class="sub">Logotipo y variantes de Laboratorios BIOS y de Plaza Tauro, más toda la papelería y material de sucursal ya en circulación.</p>
+    </div>
+
+    <div class="deliv-grid">
+      <div class="deliv"><span class="badge">01</span><span class="txt">Logotipo — BIOS y Plaza Tauro</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">02</span><span class="txt">Hoja membretada</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">03</span><span class="txt">Tarjetas de presentación</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">04</span><span class="txt">Sobre USG</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">05</span><span class="txt">Carta de presentación</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">06</span><span class="txt">Sobre aéreo</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">08</span><span class="txt">Presentación</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">10</span><span class="txt">Sobre mediano</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">11</span><span class="txt">Sobre grande</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">12</span><span class="txt">Hoja foliada</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">13</span><span class="txt">Hoja de cotización</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">14</span><span class="txt">Etiquetas de rayos X</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">15</span><span class="txt">Hoja Papanicolau</span><span class="check">✓</span></div>
+      <div class="deliv"><span class="badge">16</span><span class="txt">Folder tamaño carta</span><span class="check">✓</span></div>
+    </div>
+
+    <div class="callout">
+      <div class="callout-lbl">Pendiente</div>
+      <ul>
+        <li>Manual de marca</li>
+        <li>Croquis de la orden médica</li>
+        <li>Vinil</li>
+        <li>Volantes de contratación</li>
+      </ul>
+    </div>
+  </section>
+
+  <div class="pulse" aria-hidden="true">
+    <svg viewBox="0 0 800 46" preserveAspectRatio="none">
+      <g class="pulse-track">
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L460,23 L475,23 L485,4 L495,42 L505,23 L520,23 L800,23"/>
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L520,23 L800,23" transform="translate(800,0)"/>
+      </g>
+    </svg>
+  </div>
+
+  <section id="redes">
+    <div class="section-head">
+      <div class="section-num">03 · REDES SOCIALES</div>
+      <h2>Facebook — últimos 90 días</h2>
+      <p class="sub">7 de mayo → 4 de agosto de 2026. Las publicaciones arrancaron el 15 de mayo, desde cero.</p>
+    </div>
+
+    <div class="stat-grid">
+      <div class="stat"><div class="lbl">Visualizaciones</div><div class="val">8.9 mil</div><div class="trend up">▲ 253%</div></div>
+      <div class="stat"><div class="lbl">Espectadores</div><div class="val">1.5 mil</div><div class="trend up">▲ 623.2%</div></div>
+      <div class="stat"><div class="lbl">Interacciones con el contenido</div><div class="val">40</div><div class="trend up">▲ 100%</div></div>
+      <div class="stat"><div class="lbl">Clics en el enlace</div><div class="val">4</div><div class="trend down">▼ 50%</div></div>
+      <div class="stat"><div class="lbl">Visitas</div><div class="val">1.6 mil</div><div class="trend up">▲ 72%</div></div>
+      <div class="stat"><div class="lbl">Seguidores</div><div class="val">36</div><div class="trend up">▲ 157.1%</div></div>
+    </div>
+
+    <div class="meta-row">
+      <span><strong>15 may 2026</strong> — arranque de publicaciones</span>
+      <span><strong>3</strong> visitas a sucursales para foto y video</span>
+      <span><strong>07 ago 2026</strong> — cierre del calendario de publicaciones vigente</span>
+    </div>
+  </section>
+
+  <div class="pulse" aria-hidden="true">
+    <svg viewBox="0 0 800 46" preserveAspectRatio="none">
+      <g class="pulse-track">
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L460,23 L475,23 L485,4 L495,42 L505,23 L520,23 L800,23"/>
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L520,23 L800,23" transform="translate(800,0)"/>
+      </g>
+    </svg>
+  </div>
+
+  <section id="reputacion">
+    <div class="section-head">
+      <div class="section-num">04 · REPUTACIÓN</div>
+      <h2>Reputación en Google, sucursal por sucursal</h2>
+      <p class="sub">Un vistazo a cómo nos ven hoy en las fichas de Google de cada unidad. Este es el punto de partida para el trabajo del próximo trimestre.</p>
+    </div>
+
+    <div class="rev-grid">
+      <div class="rev">
+        <div class="loc">Laboratorio Médico Diagnóstico BIOS</div>
+        <div class="place">Teoloyucan, Edo. Méx.</div>
+        <div class="rating"><span class="num">3.0</span><span class="count">/ 5 · ~26 reseñas</span></div>
+        <div class="bar"><span style="width:60%"></span></div>
+        <a class="link" href="https://www.google.com/maps/place/Laboratorio+M%C3%A9dico+Diagn%C3%B3stico+BIOS/@19.6722043,-99.1661641,1062m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d1f50b6bb168c7:0xb673065d9b47779c!8m2!3d19.6722043!4d-99.1661641!16s%2Fg%2F11fx7xr_jw" target="_blank" rel="noopener">Ver ficha en Google →</a>
+      </div>
+
+      <div class="rev">
+        <div class="loc">BIOS Laboratorio Clínico</div>
+        <div class="place">Ecatepec de Morelos, Edo. Méx.</div>
+        <div class="rating"><span class="num">3.6</span><span class="count">/ 5 · ~52 reseñas</span></div>
+        <div class="bar"><span style="width:72%"></span></div>
+        <a class="link" href="https://www.google.com/maps/place/BIOS+laboratorios/@19.6205274,-99.2067493,1062m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d21fe2c6d7bd7d:0x1c18ab3f13e78c69!8m2!3d19.6205274!4d-99.2067493!16s%2Fg%2F11hylz2xw6" target="_blank" rel="noopener">Ver ficha en Google →</a>
+      </div>
+
+      <div class="rev">
+        <div class="loc">Laboratorio Bios — Sucursal Cantú</div>
+        <div class="place">Cuautitlán Izcalli, Edo. Méx.</div>
+        <div class="nodata">Comentarios de servicio reportados en fuentes públicas, sin calificación numérica confirmada.</div>
+        <a class="link" href="https://www.google.com/maps/place/Laboratorio+Bios+Sucursal+Cant%C3%BA/@19.6695138,-99.2095527,1062m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d21e4fffffffff:0xe7fbdfe36271ce50!8m2!3d19.6695138!4d-99.2095527!16s%2Fg%2F11b5qr5l54" target="_blank" rel="noopener">Ver ficha en Google →</a>
+      </div>
+
+      <div class="rev">
+        <div class="loc">Laboratorio BIOS</div>
+        <div class="place">Cuautitlán Izcalli, Edo. Méx. (unidad adicional)</div>
+        <div class="nodata">Sin datos públicos disponibles al momento de este corte.</div>
+        <a class="link" href="https://www.google.com/maps/place/Laboratorio+BIOS/@19.6866634,-99.2099739,1061m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d21fbfadcb6491:0x183009b953d94e65!8m2!3d19.6866634!4d-99.2099739!16s%2Fg%2F11d_9jp1cd" target="_blank" rel="noopener">Ver ficha en Google →</a>
+      </div>
+
+      <div class="rev">
+        <div class="loc">Laboratorio Médico Diagnóstico BIOS</div>
+        <div class="place">Zona Coacalco / Tultepec, Edo. Méx.</div>
+        <div class="nodata">Quejas de servicio reportadas en fuentes públicas, sin calificación numérica confirmada.</div>
+        <a class="link" href="https://www.google.com/maps/place/Laboratorio+M%C3%A9dico+Diagn%C3%B3stico+BIOS/@19.6481325,-99.2585366,1062m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d21f971697b0ab:0xca2bbe3dc155cf9d!8m2!3d19.6481325!4d-99.2585366!16s%2Fg%2F11lb6tt89s" target="_blank" rel="noopener">Ver ficha en Google →</a>
+      </div>
+
+      <div class="rev">
+        <div class="loc">Plaza Tauro</div>
+        <div class="place">Coacalco, Edo. Méx.</div>
+        <div class="nodata">Sin datos públicos disponibles al momento de este corte.</div>
+        <a class="link" href="https://www.google.com/maps/place/Plaza+Tauro/@19.6736413,-99.1283153,1062m/data=!3m2!1e3!4b1!4m6!3m5!1s0x85d1f50043041c09:0x7430a18cbbb3ea47!8m2!3d19.6736413!4d-99.1283153!16s%2Fg%2F11zgdtxx8s" target="_blank" rel="noopener">Ver ficha en Google →</a>
+      </div>
+    </div>
+
+    <div class="insight">Con lo que sí pudimos confirmar, el promedio ronda entre 3.0 y 3.6 de 5 estrellas: hay margen real de mejora, y ese es justamente el punto de partida para el siguiente trimestre.</div>
+    <div class="footnote">Cifras de referencia tomadas de directorios públicos y agregadores, no de la API oficial de Google. Deben confirmarse directamente en cada ficha de Google Business antes de usarse como reporte formal.</div>
+  </section>
+
+  <div class="pulse" aria-hidden="true">
+    <svg viewBox="0 0 800 46" preserveAspectRatio="none">
+      <g class="pulse-track">
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L460,23 L475,23 L485,4 L495,42 L505,23 L520,23 L800,23"/>
+        <path d="M0,23 L60,23 L75,23 L85,4 L95,42 L105,23 L120,23 L400,23 L520,23 L800,23" transform="translate(800,0)"/>
+      </g>
+    </svg>
+  </div>
+
+  <section id="siguiente">
+    <div class="section-head">
+      <div class="section-num">05 · PRÓXIMO TRIMESTRE</div>
+      <h2>Lo que sigue</h2>
+    </div>
+    <div class="next-card">
+      <p>El próximo trimestre nos vamos a enfocar en tres cosas: que la marca BIOS llegue a más gente en las zonas donde están las sucursales, que quien ya la conoce interactúe más con ella (en redes, en el sitio, en consulta) y que la reputación del negocio en Google mejore. Ahora mismo varias sucursales tienen calificaciones que no reflejan el servicio real que dan día a día, y ese es el primer punto que vamos a atender.</p>
+      <div class="tags">
+        <span class="tag">Alcance de marca</span>
+        <span class="tag">Interacción con la audiencia</span>
+        <span class="tag">Reputación y reseñas</span>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="wrap footer-inner">
+    <div class="footer-lockup">
+      <img class="partum-mark" src="assets/partum-logo-white.png" alt="Partum Design" />
+      <span class="brand-x" style="color:var(--ink-faint)">×</span>
+      <img class="bios-mark" src="assets/bios-logo-white.png" alt="Laboratorios BIOS" />
+    </div>
+    <div class="fine">Reporte generado el 05 de agosto de 2026 · <a href="mailto:bryan.lopez@partumdesign.com.mx">bryan.lopez@partumdesign.com.mx</a></div>
+  </div>
+</footer>
+
+</body>
+</html>
