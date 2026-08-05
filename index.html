@@ -404,6 +404,39 @@
   @media (max-width:900px){ .strategy-item,.strategy-item:nth-child(n){ grid-column:span 6; } .strategy-item:nth-child(6){ grid-column:span 12; } }
   @media (max-width:760px){ .slide h2,.strategy-slide h2{ font-size:clamp(40px,14vw,72px); } .strategy-intro{ grid-template-columns:1fr; } .strategy-item,.strategy-item:nth-child(n){ grid-column:span 12; } .topbar .brand img{ height:28px !important; } .topbar .brand img:last-child{ height:22px !important; } }
   @media (prefers-reduced-motion:reduce){ .list-row:hover,.deliv:hover,.stat6:hover,.rev:hover,.strategy-item:hover{ transform:none; } }
+
+  /* Final clarity pass: editorial pages with fewer effects and stronger reading order. */
+  .slide h2{ max-width:none; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing){ background:#f4f7fb; color:#091526; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing)::before{ background:radial-gradient(ellipse 700px 400px at 0 0,rgba(86,104,255,.09),transparent 68%),radial-gradient(ellipse 500px 420px at 100% 100%,rgba(39,208,230,.07),transparent 68%); }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing)::after{ background-image:linear-gradient(rgba(9,21,38,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(9,21,38,.04) 1px,transparent 1px); }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .topbar .brand img{ filter:brightness(0) saturate(100%); }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .topbar .brand .x{ color:#31587b; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .topbar .idx{ color:#607694; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .eyebrow-sm{ color:#155780; border-color:rgba(21,87,128,.25); background:rgba(21,87,128,.06); }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .eyebrow-sm::before{ background:#155780; box-shadow:0 0 0 5px rgba(21,87,128,.1); }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) h2{ color:#081526; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .lede{ color:#52677f; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .statcard,
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .deliv,
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .rev{ background:#fff; border-color:#d1dce8; box-shadow:0 15px 32px rgba(30,63,91,.08); color:#0b1a2c; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .statcard .num,
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .stat6 .val{ color:#0b1a2c; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .statcard .lbl,
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .stat6 .lbl,
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .rev .place,
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .rev .count{ color:#61748b; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .list-panel{ border-color:#cdd9e6; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .list-row{ border-color:#dbe4ed; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .list-row .desc{ color:#61748b; }
+  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .insight{ color:#17334e; }
+  .strategy-slide .strategy-block{ max-width:1160px; }
+  .strategy-slide .strategy-item{ min-height:210px; }
+  .strategy-slide .strategy-item p,.strategy-slide .strategy-item li{ color:#b8c8dd; }
+  .strategy-slide .strategy-item:nth-child(6) p,.strategy-slide .strategy-item:nth-child(6) li{ color:#07111f; }
+  .slide{ overflow:visible; }
+  .cover,.closing{ overflow:hidden; }
+  @media (max-width:760px){ .strategy-slide .strategy-item{ min-height:0; } }
 </style>
 </head>
 <body>
@@ -639,7 +672,7 @@
       <div class="eyebrow-sm reveal">Próximo trimestre</div>
       <h2 class="reveal" style="--d:60ms">Lo que<span class="accent">sigue</span></h2>
       <div class="strategy-intro reveal" style="--d:120ms">
-        <div class="intro-copy"><span class="strategy-label">Estrategia trimestral</span><p>De posicionamiento, interacción y reputación para BIOS</p></div>
+        <div class="intro-copy"><span class="strategy-label">Estrategia trimestral</span><p>Más personas cerca de BIOS. Más confianza en cada sucursal.</p></div>
         <div class="pillars"><div class="pillar"><i></i>Alcance de marca</div><div class="pillar"><i></i>Interacción con la audiencia</div><div class="pillar"><i></i>Reputación y reseñas</div></div>
       </div>
 
