@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Reporte de avance · BIOS × Partum Design</title>
+<title>Estrategia trimestral · BIOS × Partum Design</title>
 <meta name="description" content="Presentación digital del segundo trimestre 2026: desarrollo web, identidad de marca y redes sociales para Laboratorios BIOS." />
 <link rel="icon" href="assets/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -98,7 +98,8 @@
     padding: 26px var(--pad) 0;
   }
   .topbar .brand{ display:flex; align-items:center; gap:12px; }
-  .topbar .brand img{ height:20px; width:auto; opacity:.92; }
+  .topbar .brand img{ height:30px !important; width:auto; opacity:.96; }
+  .topbar .brand img:last-child{ height:24px !important; }
   .topbar .brand .x{ font-size:12px; color:var(--ink-faint); }
   .topbar .idx{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint); letter-spacing:.05em; }
 
@@ -271,6 +272,33 @@
   .next-card p{ font-size:clamp(17px,2vw,21px); line-height:1.65; max-width:66ch; color:var(--ink); margin:0; }
   .next-card .tags{ margin-top:28px; display:flex; gap:10px; flex-wrap:wrap; }
   .next-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 14px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-dim); }
+
+  /* ================= quarterly strategy ================= */
+  .strategy-slide{ min-height:auto; padding-top:clamp(120px,12vw,170px); padding-bottom:clamp(90px,10vw,150px); overflow:visible; }
+  .strategy-slide .slide-inner{ max-width:1240px; }
+  .strategy-intro{ margin-top:38px; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr); gap:22px; align-items:stretch; }
+  .strategy-intro .intro-copy, .strategy-intro .pillars{ border:1px solid var(--line-strong); border-radius:24px; padding:clamp(24px,3vw,38px); background:linear-gradient(145deg,rgba(59,130,232,.12),rgba(24,180,204,.05)); }
+  .strategy-intro p{ margin:0; color:var(--ink); font-size:clamp(17px,1.8vw,21px); line-height:1.65; }
+  .strategy-intro .pillars{ display:flex; flex-direction:column; justify-content:center; gap:11px; }
+  .pillar{ display:flex; align-items:center; gap:12px; color:var(--ink-dim); font-size:14px; }
+  .pillar i{ width:10px; height:10px; border-radius:50%; background:var(--partum-teal); box-shadow:0 0 0 6px rgba(24,180,204,.12); flex:0 0 auto; }
+  .strategy-block{ margin-top:54px; padding-top:34px; border-top:1px solid var(--line); }
+  .strategy-block h3{ font-size:clamp(24px,3vw,38px); line-height:1.12; }
+  .strategy-block h3 span{ display:block; color:var(--partum-teal); font-size:.62em; margin-bottom:9px; letter-spacing:.02em; }
+  .strategy-block > p{ max-width:76ch; color:var(--ink-dim); margin:18px 0 0; font-size:15px; line-height:1.7; }
+  .strategy-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:24px; }
+  .strategy-item{ border:1px solid var(--line); border-radius:16px; padding:22px; background:rgba(10,18,32,.78); transition:transform .25s ease,border-color .25s ease,background .25s ease; }
+  .strategy-item:hover{ transform:translateY(-4px); border-color:rgba(24,180,204,.5); background:rgba(17,31,54,.9); }
+  .strategy-item h4{ margin:0 0 10px; font-family:'Space Grotesk',sans-serif; font-size:17px; }
+  .strategy-item p{ margin:0; color:var(--ink-dim); font-size:14px; line-height:1.65; }
+  .strategy-item ul, .strategy-list{ margin:12px 0 0; padding-left:19px; color:var(--ink-dim); font-size:14px; line-height:1.7; }
+  .strategy-item li::marker, .strategy-list li::marker{ color:var(--partum-teal); }
+  .strategy-list{ columns:2; column-gap:40px; }
+  .strategy-list li{ break-inside:avoid; margin-bottom:5px; }
+  .strategy-label{ display:inline-flex; font:500 11px 'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.08em; color:var(--bios-blue); margin-bottom:12px; }
+  .closing .lockup-big img.bios{ height:clamp(68px,10vw,120px); }
+  .closing .lockup-big img.partum{ height:clamp(48px,7vw,88px); }
+  @media (max-width:760px){ .strategy-intro,.strategy-grid{ grid-template-columns:1fr; } .strategy-list{ columns:1; } .strategy-slide{ padding-top:105px; } }
 
   /* ================= closing ================= */
   .closing{ align-items:center; text-align:center; }
@@ -506,12 +534,11 @@
       </div>
 
       <div class="insight reveal" style="--d:400ms">2.9★ de promedio en 288 reseñas, sumando las 5 sucursales de BIOS. Hay margen real de mejora, y ese es justamente el punto de partida para el siguiente trimestre.</div>
-      <div class="footnote">Calificaciones y número de reseñas tomados directamente de la ficha de Google Maps de cada sucursal, consultadas el 05 de agosto de 2026.</div>
     </div>
   </section>
 
   <!-- ============ 06 SIGUIENTE ============ -->
-  <section class="slide" id="s6">
+  <section class="slide strategy-slide" id="s6">
     <div class="ghost-num">06</div>
     <div class="topbar">
       <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
@@ -520,14 +547,71 @@
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Próximo trimestre</div>
       <h2 class="reveal" style="--d:60ms">Lo que<span class="accent">sigue</span></h2>
+      <div class="strategy-intro reveal" style="--d:120ms">
+        <div class="intro-copy"><span class="strategy-label">Estrategia trimestral</span><p>De posicionamiento, interacción y reputación para BIOS</p></div>
+        <div class="pillars"><div class="pillar"><i></i>Alcance de marca</div><div class="pillar"><i></i>Interacción con la audiencia</div><div class="pillar"><i></i>Reputación y reseñas</div></div>
+      </div>
 
-      <div class="next-card reveal" style="--d:160ms">
-        <p>El próximo trimestre nos vamos a enfocar en tres cosas: que la marca BIOS llegue a más gente en las zonas donde están las sucursales, que quien ya la conoce interactúe más con ella (en redes, en el sitio, en consulta) y que la reputación del negocio en Google mejore. Ahora mismo varias sucursales tienen calificaciones que no reflejan el servicio real que dan día a día, y ese es el primer punto que vamos a atender.</p>
-        <div class="tags">
-          <span class="tag">Alcance de marca</span>
-          <span class="tag">Interacción con la audiencia</span>
-          <span class="tag">Reputación y reseñas</span>
+      <div class="strategy-block reveal" style="--d:160ms">
+        <h3><span>Dirección</span>Objetivo general del trimestre</h3>
+        <p>Lograr que BIOS tenga una presencia digital más sólida, cercana y confiable en las zonas donde opera, conectando sus redes sociales, sitio web, sucursales y perfiles de Google dentro de una misma estrategia.</p>
+        <ul class="strategy-list"><li>Incrementar el número de personas que conocen BIOS en las zonas cercanas a sus sucursales.</li><li>Generar más visitas al sitio web, perfiles sociales y ubicaciones de Google.</li><li>Aumentar las interacciones con publicaciones, servicios y contenido informativo.</li><li>Conseguir nuevas reseñas auténticas de pacientes satisfechos.</li><li>Mejorar progresivamente la calificación y percepción pública de las sucursales.</li><li>Detectar y atender comentarios negativos o áreas recurrentes de oportunidad.</li><li>Construir una comunicación más humana, constante y reconocible.</li></ul>
+      </div>
+
+      <div class="strategy-block reveal" style="--d:200ms">
+        <h3><span>Mes 1</span>Reputación, diagnóstico y preparación</h3>
+        <p>Organizar la presencia digital de cada sucursal, detectar los principales problemas de reputación y establecer un sistema permanente para solicitar, responder y dar seguimiento a las reseñas.</p>
+        <div class="strategy-grid">
+          <article class="strategy-item"><h4>01 · Auditoría de reputación digital</h4><p>Revisión de cada perfil de BIOS en Google para identificar calificación, reseñas, frecuencia, comentarios positivos, quejas recurrentes, reseñas sin respuesta, información incorrecta, fotografías y datos por corregir.</p></article>
+          <article class="strategy-item"><h4>02 · Optimización de perfiles de Google</h4><p>Actualización de nombre, dirección, horarios, teléfono, sitio web, servicios, fotografías, descripción, enlaces de contacto y ubicación precisa de cada sucursal.</p></article>
+          <article class="strategy-item"><h4>03 · Sistema de solicitud de reseñas</h4><p>Código QR por sucursal, enlace directo a Google Maps, material para recepción y salas de espera, mensaje digital para WhatsApp, texto para el personal y recordatorio posterior. Siempre dirigido a pacientes reales.</p></article>
+          <article class="strategy-item"><h4>04 · Protocolo de respuesta</h4><p>Guía para reseñas positivas, neutrales, quejas, dudas, instalaciones y casos que requieran seguimiento privado. Respuestas humanas, respetuosas y personalizadas.</p></article>
+          <article class="strategy-item"><h4>05 · Capacitación y comunicación interna</h4><p>Guía breve para explicar cuándo solicitar una reseña, cómo compartir el QR, qué lenguaje utilizar, qué evitar y cómo escalar una inconformidad delicada.</p></article>
+          <article class="strategy-item"><h4>Entregables del mes</h4><ul><li>Auditoría y reporte por sucursal.</li><li>Perfiles de Google optimizados.</li><li>Código QR individual y material gráfico.</li><li>Mensajes para WhatsApp y recepción.</li><li>Manual de respuestas y tablero de seguimiento.</li></ul></article>
         </div>
+      </div>
+
+      <div class="strategy-block reveal" style="--d:240ms">
+        <h3><span>Mes 2</span>Alcance local y reconocimiento de marca</h3>
+        <p>Aumentar la cantidad de personas que descubren BIOS dentro de las zonas cercanas a cada sucursal y posicionar la marca como una opción confiable, accesible y profesional.</p>
+        <div class="strategy-grid">
+          <article class="strategy-item"><h4>01 · Contenido geolocalizado</h4><p>Publicaciones sobre ubicación, horarios, servicios, cómo llegar, instalaciones, equipo, preparación, preguntas frecuentes, estudios de laboratorio, prevención y fechas relevantes de salud.</p></article>
+          <article class="strategy-item"><h4>02 · Campañas de alcance por sucursal</h4><p>Campañas dirigidas a personas que viven, trabajan o transitan cerca, con llamados a Google Maps, sitio web, WhatsApp, servicios, sucursal o formulario de contacto.</p></article>
+          <article class="strategy-item"><h4>03 · Optimización para búsquedas locales</h4><p>Secciones por ubicación, dirección, teléfono, horario, mapa, servicios, botones de Google Maps, títulos, descripciones, preguntas frecuentes y navegación móvil.</p></article>
+          <article class="strategy-item"><h4>04 · Contenido de confianza</h4><p>Presentación del equipo, procesos, recorridos, explicación de estudios, preparación, mitos, testimonios autorizados, innovación, calidad, higiene y seguridad.</p></article>
+          <article class="strategy-item"><h4>Entregables del mes</h4><ul><li>Calendario mensual y diseños para publicaciones.</li><li>Contenido diferenciado por sucursal.</li><li>Campañas segmentadas por ubicación.</li><li>Páginas locales dentro del sitio.</li><li>Reporte de alcance, clics y visitas.</li><li>Recomendaciones de optimización.</li></ul></article>
+        </div>
+      </div>
+
+      <div class="strategy-block reveal" style="--d:280ms">
+        <h3><span>Mes 3</span>Interacción, conversión y optimización</h3>
+        <p>Convertir el alcance generado en conversaciones, visitas al sitio, solicitudes de información, indicaciones para llegar a una sucursal y nuevas reseñas.</p>
+        <div class="strategy-grid">
+          <article class="strategy-item"><h4>01 · Contenido para participar</h4><p>Preguntas frecuentes, encuestas, verdadero o falso, mitos, cuestionarios, consejos, publicaciones guardables, historias con preguntas y explicaciones sencillas.</p></article>
+          <article class="strategy-item"><h4>02 · Rutas claras de atención</h4><p>Cada contenido dirigirá a consultar un servicio, escribir por WhatsApp, visitar el sitio, abrir Google Maps, conocer una sucursal, revisar requisitos, solicitar información o dejar una reseña.</p></article>
+          <article class="strategy-item"><h4>03 · Seguimiento de comentarios y mensajes</h4><p>Clasificación de solicitudes, precios, horarios, preparación, quejas, comentarios positivos, ubicaciones, posibles pacientes y temas que requieran atención interna.</p></article>
+          <article class="strategy-item"><h4>04 · Segunda campaña de reputación</h4><p>Refuerzo en sucursales con menor crecimiento, revisando materiales, horarios, comentarios repetidos, puntos del servicio y necesidades de apoyo.</p></article>
+          <article class="strategy-item"><h4>05 · Análisis y optimización trimestral</h4><p>Reporte comparativo con calificaciones, reseñas, respuestas, alcance, interacciones, visitas, clics, mejores contenidos, crecimiento, comentarios y recomendaciones.</p></article>
+          <article class="strategy-item"><h4>Entregables del mes</h4><ul><li>Calendario interactivo y piezas gráficas.</li><li>Dinámicas para historias y redes.</li><li>Seguimiento de interacciones.</li><li>Refuerzo de campaña de reseñas.</li><li>Optimización de campañas.</li><li>Reporte trimestral y propuesta siguiente.</li></ul></article>
+        </div>
+      </div>
+
+      <div class="strategy-block reveal" style="--d:320ms">
+        <h3><span>Operación</span>Gestión mensual de Partum Design</h3>
+        <p>Durante los tres meses, Partum Design coordinará la estrategia, preparará los materiales, revisará resultados y presentará recomendaciones.</p>
+        <ul class="strategy-list"><li><strong>Planeación:</strong> temas, objetivos, campañas, sucursales prioritarias y contenido.</li><li><strong>Producción:</strong> textos, diseños, materiales, publicaciones, códigos QR y recursos.</li><li><strong>Implementación:</strong> publicación, actualización, campañas y distribución.</li><li><strong>Seguimiento:</strong> comentarios, reseñas, mensajes, alcance, clics y audiencia.</li><li><strong>Reporte:</strong> resultados, observaciones, aprendizajes y ajustes.</li></ul>
+      </div>
+
+      <div class="strategy-block reveal" style="--d:360ms">
+        <h3><span>Medición</span>Indicadores y metas sugeridas</h3>
+        <p>La estrategia se evaluará con indicadores de alcance de marca, interacción y reputación: personas alcanzadas, impresiones, seguidores, visitas, búsquedas, clics, reacciones, comentarios, mensajes, consultas, reseñas, calificación, porcentaje y tiempo de respuesta.</p>
+        <ul class="strategy-list"><li>Responder el 100 % de las nuevas reseñas.</li><li>Dar seguimiento a reseñas negativas que requieran atención.</li><li>Incrementar de manera constante las reseñas auténticas.</li><li>Aumentar visitas a perfiles y clics para indicaciones.</li><li>Mejorar el alcance local y la interacción educativa.</li><li>Identificar motivos de satisfacción e inconformidad.</li><li>Conseguir mejora progresiva en sucursales prioritarias.</li></ul>
+      </div>
+
+      <div class="strategy-block reveal" style="--d:400ms">
+        <h3><span>Colaboración</span>Participación necesaria de BIOS</h3>
+        <ul class="strategy-list"><li>Comunicar promociones o campañas con anticipación.</li><li>Implementar la solicitud de reseñas en recepción.</li><li>Reportar inconformidades que necesiten seguimiento.</li><li>Dar respuesta interna a temas médicos, administrativos o sensibles.</li><li>Informar cambios de horario o servicio.</li><li>Participar en contenido humano y audiovisual.</li></ul>
+        <div class="insight">Al terminar el trimestre, BIOS contará con una estrategia de reputación más ordenada, perfiles de Google optimizados, mayor presencia local y un sistema activo para transformar la experiencia diaria de los pacientes en confianza digital.</div>
       </div>
     </div>
   </section>
@@ -540,8 +624,7 @@
         <span class="x">×</span>
         <img class="partum" src="assets/partum-logo-white.png" alt="Partum Design" />
       </div>
-      <h2 class="reveal" style="--d:160ms">Así seguimos trabajando juntos.</h2>
-      <div class="fine reveal" style="--d:220ms">Reporte generado el 05 de agosto de 2026 · <a href="mailto:bryan.lopez@partumdesign.com.mx">bryan.lopez@partumdesign.com.mx</a></div>
+      <h2 class="reveal" style="--d:160ms">Seguimos trabajando juntos.</h2>
       <div class="back reveal" style="--d:280ms"><button id="backTop">↑ Volver al inicio</button></div>
     </div>
   </section>
