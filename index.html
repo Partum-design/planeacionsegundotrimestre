@@ -11,36 +11,35 @@
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
   :root{
-    --navy-950:#05090f;
-    --navy-900:#0a1220;
-    --navy-800:#111f36;
-    --navy-700:#1a2c4a;
-    --line:rgba(255,255,255,.09);
-    --line-strong:rgba(255,255,255,.18);
-    --bios-blue:#3b82e8;
-    --bios-blue-deep:#123a70;
-    --partum-teal:#18b4cc;
-    --partum-navy:#0c2c52;
-    --ink:#f3f6fb;
-    --ink-dim:#98a8c6;
-    --ink-faint:#5c6d8c;
+    --bg:#070c16;
+    --panel:#0d1626;
+    --panel-2:#111d33;
+    --electric:#3e63ff;
+    --electric-deep:#1e3fd4;
+    --cyan:#2bd9ea;
+    --paper:#eef3f9;
+    --card:#ffffff;
+    --ink:#f4f7fc;
+    --ink-dim:#9daec9;
+    --ink-faint:#5f7092;
+    --dark-ink:#0a1526;
+    --dark-ink-dim:#4d6076;
+    --line:rgba(255,255,255,.10);
+    --line-strong:rgba(255,255,255,.20);
+    --line-light:#d4dfeb;
     --good:#34c98d;
-    --good-dim:rgba(52,201,141,.14);
     --warn:#f2b544;
-    --warn-dim:rgba(242,181,68,.14);
     --critical:#ef5a6f;
-    --critical-dim:rgba(239,90,111,.14);
-    --pending-dim:rgba(147,164,194,.12);
-    --radius:16px;
+    --r:6px;
     --pad: clamp(24px, 6vw, 88px);
   }
 
-  *{box-sizing:border-box;}
+  *{ box-sizing:border-box; }
   html{ scroll-behavior:smooth; }
 
   body{
     margin:0;
-    background:var(--navy-950);
+    background:var(--bg);
     color:var(--ink);
     font-family:'Inter', system-ui, sans-serif;
     -webkit-font-smoothing:antialiased;
@@ -48,14 +47,14 @@
     overflow-x:hidden;
   }
 
-  h1,h2,h3{ font-family:'Space Grotesk', 'Inter', sans-serif; margin:0; letter-spacing:-0.01em; }
+  h1,h2,h3,h4{ font-family:'Space Grotesk','Inter',sans-serif; margin:0; }
   .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
   a{ color:inherit; }
   img{ max-width:100%; display:block; }
-  ::selection{ background:rgba(59,130,232,.35); }
-  :focus-visible{ outline:2px solid var(--bios-blue); outline-offset:3px; }
+  ::selection{ background:rgba(62,99,255,.4); }
+  :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
 
-  /* ================= deck / scroll-snap ================= */
+  /* ================= deck ================= */
   .deck{
     height:100svh; height:100vh;
     overflow-y:auto; overflow-x:hidden;
@@ -65,46 +64,65 @@
     min-height:100svh; min-height:100vh;
     position:relative;
     display:flex; flex-direction:column; justify-content:center;
-    padding: var(--pad);
+    padding: clamp(110px,12vh,150px) var(--pad) clamp(70px,9vh,120px);
     scroll-snap-align:start;
-    border-bottom:1px solid var(--line);
     overflow:hidden;
   }
-  .slide::before{
-    content:"";
-    position:absolute; inset:0;
-    background:
-      radial-gradient(ellipse 900px 520px at 12% -8%, rgba(59,130,232,.14), transparent 60%),
-      radial-gradient(ellipse 700px 520px at 105% 8%, rgba(24,180,204,.10), transparent 55%);
-    pointer-events:none;
-  }
-  .slide-inner{ position:relative; z-index:2; width:100%; max-width:1180px; margin:0 auto; }
+  .slide-inner{ position:relative; z-index:2; width:100%; max-width:1240px; margin:0 auto; }
 
+  /* dark slides: soft electric blob top-left, like the reference decks */
+  .slide.dark{
+    background:var(--bg);
+  }
+  .slide.dark::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 780px 560px at 8% -6%, rgba(62,99,255,.22), transparent 62%),
+      radial-gradient(ellipse 620px 480px at 102% 104%, rgba(43,217,234,.09), transparent 60%);
+  }
+
+  /* light slides: clean paper, faint blue wash */
+  .slide.light{ background:var(--paper); color:var(--dark-ink); }
+  .slide.light::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 700px 420px at 100% 0%, rgba(62,99,255,.07), transparent 65%);
+  }
+
+  /* ================= ghost number (Nexora-style) ================= */
   .ghost-num{
-    position:absolute; z-index:1; top:50%; right:clamp(-40px,-2vw,20px);
+    position:absolute; z-index:1; top:50%; right:clamp(-60px,-3vw,16px);
     transform:translateY(-50%);
     font-family:'Space Grotesk',sans-serif; font-weight:700;
-    font-size:clamp(180px, 34vw, 480px);
-    line-height:1; letter-spacing:-.04em;
-    background:linear-gradient(160deg, rgba(59,130,232,.20), rgba(24,180,204,.07));
+    font-size:clamp(220px, 32vw, 540px);
+    line-height:1; letter-spacing:-.05em;
+    background:linear-gradient(165deg, rgba(62,99,255,.42), rgba(62,99,255,.02) 78%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
-    -webkit-text-stroke:1px rgba(255,255,255,.05);
     pointer-events:none; user-select:none;
   }
+  .slide.light .ghost-num{
+    background:linear-gradient(165deg, rgba(62,99,255,.16), rgba(62,99,255,.01) 78%);
+    -webkit-background-clip:text; background-clip:text;
+  }
 
+  /* ================= topbar ================= */
   .topbar{
     position:absolute; top:0; left:0; right:0; z-index:3;
-    display:flex; align-items:center; justify-content:space-between;
-    padding: 26px var(--pad) 0;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding: 22px var(--pad);
+    border-bottom:1px solid var(--line);
   }
-  .topbar .brand{ display:flex; align-items:center; gap:12px; }
-  .topbar .brand img{ height:30px !important; width:auto; opacity:.96; }
-  .topbar .brand img:last-child{ height:24px !important; }
-  .topbar .brand .x{ font-size:12px; color:var(--ink-faint); }
-  .topbar .idx{ font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint); letter-spacing:.05em; }
+  .slide.light .topbar{ border-bottom-color:var(--line-light); }
+  .topbar .brand{ display:flex; align-items:center; gap:13px; }
+  .topbar .brand img{ height:30px; width:auto; }
+  .topbar .brand img.partum{ height:23px; }
+  .topbar .brand .x{ font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--cyan); }
+  .slide.light .topbar .brand img{ filter:brightness(0) saturate(100%); opacity:.88; }
+  .slide.light .topbar .brand .x{ color:var(--electric); }
+  .topbar .idx{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); letter-spacing:.12em; }
+  .slide.light .topbar .idx{ color:var(--dark-ink-dim); }
 
-  /* ---------- reveal-on-scroll ---------- */
-  .reveal{ opacity:0; transform:translateY(22px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+  /* ================= reveal ================= */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
   .reveal.in{ opacity:1; transform:translateY(0); }
   @media (prefers-reduced-motion:reduce){
     .reveal{ transition:none; opacity:1; transform:none; }
@@ -115,22 +133,21 @@
   .dotnav{
     position:fixed; right:22px; top:50%; transform:translateY(-50%); z-index:40;
     display:flex; flex-direction:column; gap:14px; align-items:flex-end;
+    mix-blend-mode:difference;
   }
-  .dotnav button{
-    all:unset; cursor:pointer; display:flex; align-items:center; gap:10px; justify-content:flex-end;
-  }
-  .dotnav .dot{ width:7px; height:7px; border-radius:50%; background:var(--ink-faint); transition:all .25s ease; }
+  .dotnav button{ all:unset; cursor:pointer; display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+  .dotnav .dot{ width:7px; height:7px; border-radius:50%; background:#8a8a8a; transition:all .25s ease; }
   .dotnav .lbl{
-    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint);
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#bbb;
     opacity:0; transform:translateX(6px); transition:all .2s ease; white-space:nowrap;
   }
   .dotnav button:hover .lbl{ opacity:1; transform:translateX(0); }
-  .dotnav button.active .dot{ background:var(--bios-blue); width:9px; height:9px; box-shadow:0 0 0 4px rgba(59,130,232,.18); }
-  .dotnav button.active .lbl{ opacity:1; transform:translateX(0); color:var(--ink); }
+  .dotnav button.active .dot{ background:#fff; width:9px; height:9px; }
+  .dotnav button.active .lbl{ opacity:1; transform:translateX(0); color:#fff; }
   @media (max-width:760px){ .dotnav{ display:none; } }
 
   .scrollcue{
-    position:absolute; bottom:30px; left:0; right:0; text-align:center; z-index:2;
+    position:absolute; bottom:26px; left:0; right:0; text-align:center; z-index:2;
     font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);
     display:flex; flex-direction:column; align-items:center; gap:8px;
   }
@@ -138,38 +155,67 @@
   @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
   @media (prefers-reduced-motion:reduce){ .scrollcue .chev{ animation:none; } }
 
-  /* ================= cover ================= */
-  .cover{ align-items:center; text-align:left; }
-  .cover .eyebrow{
-    display:inline-flex; align-items:center; gap:8px;
-    font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.1em;
-    color:var(--bios-blue); text-transform:uppercase;
-    border:1px solid var(--bios-blue-deep); background:rgba(59,130,232,.08);
-    padding:7px 14px; border-radius:999px; margin-bottom:30px;
+  /* ================= headings ================= */
+  .eyebrow-sm{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--cyan);
+    padding:8px 14px; border:1px solid rgba(43,217,234,.3); background:rgba(43,217,234,.06);
+    border-radius:999px; margin-bottom:22px;
   }
-  .cover h1{
-    font-size:clamp(40px, 8vw, 96px); font-weight:600; line-height:1.02;
+  .eyebrow-sm::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--cyan); }
+  .slide.light .eyebrow-sm{ color:var(--electric-deep); border-color:rgba(30,63,212,.28); background:rgba(62,99,255,.06); }
+  .slide.light .eyebrow-sm::before{ background:var(--electric); }
+
+  .slide h2{
+    font-size:clamp(40px, 6.4vw, 82px); font-weight:600; line-height:.98; letter-spacing:-.045em;
   }
-  .cover h1 .accent{
-    background:linear-gradient(100deg, var(--bios-blue), var(--partum-teal));
+  .slide h2 .accent{
+    display:block;
+    background:linear-gradient(95deg, var(--electric) 10%, var(--cyan) 90%);
     -webkit-background-clip:text; background-clip:text; color:transparent;
   }
-  .cover .sub{ margin-top:26px; font-size:clamp(15px,1.6vw,19px); color:var(--ink-dim); max-width:52ch; }
-  .cover .daterange{
-    margin-top:28px; display:inline-flex; align-items:center; gap:12px;
-    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-faint);
-    border:1px solid var(--line); border-radius:999px; padding:8px 16px;
+  .slide.light h2 .accent{
+    background:linear-gradient(95deg, var(--electric-deep), #0d9db4);
+    -webkit-background-clip:text; background-clip:text;
   }
-  .daterange .dot{ width:6px;height:6px;border-radius:50%;background:var(--good); box-shadow:0 0 0 4px var(--good-dim); }
+  .slide .lede{ margin-top:22px; font-size:clamp(15px,1.6vw,17px); color:var(--ink-dim); max-width:58ch; line-height:1.7; }
+  .slide.light .lede{ color:var(--dark-ink-dim); }
+
+  /* ================= cover ================= */
+  .cover{ padding-top:clamp(90px,11vh,140px); }
+  .cover .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.12em;
+    color:var(--cyan); text-transform:uppercase;
+    border:1px solid rgba(43,217,234,.32); background:rgba(43,217,234,.07);
+    padding:8px 16px; border-radius:999px; margin-bottom:34px;
+  }
+  .cover h1{
+    font-size:clamp(52px, 9.6vw, 126px); font-weight:600; line-height:.96; letter-spacing:-.055em;
+    max-width:10ch;
+  }
+  .cover h1 .accent{
+    background:linear-gradient(95deg, var(--electric) 5%, var(--cyan) 95%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .cover .sub{ margin-top:28px; font-size:clamp(16px,1.7vw,20px); color:var(--ink-dim); max-width:52ch; line-height:1.7; }
+  .cover .daterange{
+    margin-top:30px; display:inline-flex; align-items:center; gap:12px;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-dim);
+    border:1px solid var(--line-strong); border-radius:999px; padding:9px 18px;
+  }
+  .daterange .dot{ width:6px;height:6px;border-radius:50%;background:var(--good); box-shadow:0 0 0 4px rgba(52,201,141,.16); }
 
   .lockup-big{
-    margin-top:54px; display:flex; align-items:center; gap:34px; flex-wrap:wrap;
-    padding:34px 40px; border:1px solid var(--line); border-radius:22px;
-    background:linear-gradient(135deg, rgba(255,255,255,.035), rgba(255,255,255,0));
+    margin-top:48px; display:inline-flex; align-items:center; gap:clamp(20px,3vw,38px); flex-wrap:wrap;
+    padding:clamp(24px,3vw,36px) clamp(28px,4vw,48px);
+    border:1px solid var(--line-strong); border-radius:var(--r);
+    background:linear-gradient(120deg, rgba(62,99,255,.16), rgba(43,217,234,.05));
   }
-  .lockup-big img.bios{ height:clamp(46px,7vw,84px); width:auto; }
-  .lockup-big img.partum{ height:clamp(34px,5.2vw,62px); width:auto; }
-  .lockup-big .x{ font-size:22px; color:var(--ink-faint); font-family:'IBM Plex Mono',monospace; }
+  .lockup-big img.bios{ height:clamp(52px,8vw,96px); width:auto; }
+  .lockup-big img.partum{ height:clamp(38px,5.6vw,70px); width:auto; }
+  .lockup-big .x{ font-size:clamp(20px,2.4vw,28px); color:var(--cyan); font-family:'IBM Plex Mono',monospace; }
   .lockup-big.animate img{ opacity:0; transform:scale(.92); animation:pop .8s cubic-bezier(.2,.7,.2,1) forwards; }
   .lockup-big.animate img.bios{ animation-delay:.15s; }
   .lockup-big.animate img.partum{ animation-delay:.4s; }
@@ -178,265 +224,281 @@
   @keyframes fadein{ to{ opacity:1; } }
   @media (prefers-reduced-motion:reduce){ .lockup-big.animate img, .lockup-big.animate .x{ animation:none; opacity:1; transform:none; } }
 
-  /* ================= headings ================= */
-  .eyebrow-sm{
-    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-faint);
-    letter-spacing:.08em; margin-bottom:16px; text-transform:uppercase;
-  }
-  .slide h2{
-    font-size:clamp(32px, 5.6vw, 64px); font-weight:600; line-height:1.04;
-  }
-  .slide h2 .accent{
-    display:block;
-    background:linear-gradient(100deg, var(--bios-blue), var(--partum-teal));
-    -webkit-background-clip:text; background-clip:text; color:transparent;
-  }
-  .slide .lede{ margin-top:20px; font-size:15.5px; color:var(--ink-dim); max-width:56ch; }
-
-  /* ================= stat blocks ================= */
-  .stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:48px; }
+  /* ================= stat cards (resumen) ================= */
+  .stat-row{ display:grid; grid-template-columns:repeat(3,1fr); gap:16px; margin-top:52px; }
   .statcard{
-    background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius);
-    padding:28px 26px;
+    position:relative; min-height:200px; padding:28px;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
   }
-  .statcard .num{ font-family:'Space Grotesk',sans-serif; font-size:clamp(30px,4.4vw,46px); font-weight:600; }
-  .statcard .num .unit{ font-size:.5em; color:var(--ink-faint); font-weight:500; }
-  .statcard .lbl{ margin-top:10px; font-size:13.5px; color:var(--ink-dim); }
-  @media (max-width:760px){ .stat-row{ grid-template-columns:1fr; } }
+  .statcard .num{ font-family:'Space Grotesk',sans-serif; font-size:clamp(46px,5.4vw,72px); font-weight:600; letter-spacing:-.05em; line-height:1; }
+  .statcard .num .unit{ font-size:.42em; color:var(--ink-faint); font-weight:500; letter-spacing:0; }
+  .statcard .lbl{ margin-top:14px; font-size:14px; color:var(--ink-dim); max-width:22ch; }
+  .statcard.featured{
+    background:linear-gradient(135deg, var(--electric), #2fb9d8);
+    border-color:transparent; color:var(--dark-ink);
+  }
+  .statcard.featured .num{ color:#061024; }
+  .statcard.featured .num .unit{ color:rgba(6,16,36,.55); }
+  .statcard.featured .lbl{ color:rgba(6,16,36,.78); }
+  @media (max-width:760px){ .stat-row{ grid-template-columns:1fr; } .statcard{ min-height:150px; } }
 
-  /* ================= bordered list (tech pipeline) ================= */
-  .list-panel{ margin-top:44px; display:flex; flex-direction:column; }
+  /* ================= list rows (tecnología) ================= */
+  .list-panel{ margin-top:46px; display:flex; flex-direction:column; border-top:1px solid var(--line-strong); }
   .list-row{
-    display:flex; align-items:center; gap:20px; flex-wrap:wrap;
-    padding:22px 4px; border-bottom:1px solid var(--line);
+    display:flex; align-items:center; gap:22px; flex-wrap:wrap;
+    padding:24px 6px; border-bottom:1px solid var(--line);
+    transition:background .25s ease, padding-left .25s ease;
   }
-  .list-row:first-child{ border-top:1px solid var(--line); }
-  .list-row .name{ font-weight:600; font-size:16px; min-width:250px; }
-  .list-row .desc{ font-size:13.5px; color:var(--ink-dim); flex:1; min-width:220px; }
+  .list-row:hover{ background:rgba(62,99,255,.07); padding-left:14px; }
+  .list-row .n{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint); min-width:30px; }
+  .list-row .name{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:17.5px; min-width:250px; letter-spacing:-.01em; }
+  .list-row .desc{ font-size:13.5px; color:var(--ink-dim); flex:1; min-width:220px; line-height:1.6; }
 
-  .chip{ display:inline-flex; align-items:center; gap:6px; font-size:12px; font-family:'IBM Plex Mono',monospace; padding:5px 12px; border-radius:999px; white-space:nowrap; }
-  .chip.done{ background:var(--good-dim); color:var(--good); }
-  .chip.paused{ background:var(--warn-dim); color:var(--warn); }
-  .chip.pending{ background:var(--pending-dim); color:var(--ink-dim); }
+  .chip{ display:inline-flex; align-items:center; gap:6px; font-size:11.5px; font-family:'IBM Plex Mono',monospace; letter-spacing:.03em; padding:7px 13px; border-radius:999px; white-space:nowrap; }
+  .chip.done{ background:rgba(52,201,141,.14); color:var(--good); border:1px solid rgba(52,201,141,.3); }
+  .chip.paused{ background:rgba(242,181,68,.13); color:var(--warn); border:1px solid rgba(242,181,68,.3); }
+  .chip.pending{ background:rgba(157,174,201,.1); color:var(--ink-dim); border:1px solid var(--line); }
 
-  .callout{ margin-top:30px; padding:20px 24px; border:1px solid var(--line-strong); border-radius:var(--radius); background:var(--warn-dim); }
-  .callout .callout-lbl{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--warn); text-transform:uppercase; letter-spacing:.06em; margin-bottom:10px; }
-  .callout ul{ margin:0; padding-left:18px; font-size:14.5px; color:var(--ink); display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; }
+  .callout{
+    margin-top:36px; padding:24px 28px; border-radius:var(--r);
+    background:linear-gradient(120deg, rgba(242,181,68,.13), rgba(242,181,68,.04));
+    border:1px solid rgba(242,181,68,.35);
+  }
+  .callout .callout-lbl{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--warn); text-transform:uppercase; letter-spacing:.1em; margin-bottom:12px; }
+  .callout ul{ margin:0; padding-left:18px; font-size:14.5px; color:var(--ink); display:grid; grid-template-columns:1fr 1fr; gap:8px 24px; line-height:1.55; }
+  .callout li::marker{ color:var(--warn); }
+  .slide.light .callout{ background:#fff7e8; border-color:#ecc57a; }
+  .slide.light .callout ul{ color:var(--dark-ink); }
   @media (max-width:600px){ .callout ul{ grid-template-columns:1fr; } }
 
-  /* ================= design deliverables ================= */
-  .deliv-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(215px,1fr)); gap:12px; margin-top:44px; }
-  .deliv{
-    background:var(--navy-900); border:1px solid var(--line); border-radius:12px;
-    padding:16px 18px; display:flex; align-items:flex-start; gap:12px;
-  }
-  .deliv .badge{ font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--bios-blue); border:1px solid var(--bios-blue-deep); background:rgba(59,130,232,.08); width:26px; height:26px; border-radius:7px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
-  .deliv .txt{ font-size:13.5px; padding-top:3px; }
-  .deliv .check{ margin-left:auto; color:var(--good); font-size:13px; }
+  /* ================= diseño (light) ================= */
+  .design-head{ display:flex; align-items:flex-end; justify-content:space-between; gap:28px; flex-wrap:wrap; }
+  .design-count{ text-align:right; }
+  .design-count .big{ font-family:'Space Grotesk',sans-serif; font-size:clamp(56px,7vw,96px); font-weight:600; line-height:.95; letter-spacing:-.05em; color:var(--electric-deep); }
+  .design-count .big span{ font-size:.42em; color:var(--dark-ink-dim); font-weight:500; }
+  .design-count .cap{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--dark-ink-dim); margin-top:8px; }
 
-  /* ================= redes stat grid ================= */
-  .stat-grid6{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:44px; }
-  .stat6{ background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius); padding:24px 24px; }
+  .deliv-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:12px; margin-top:42px; }
+  .deliv{
+    background:var(--card); border:1px solid var(--line-light); border-radius:var(--r);
+    padding:18px; display:flex; align-items:flex-start; gap:12px;
+    box-shadow:0 10px 24px rgba(23,48,84,.06);
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .deliv:hover{ transform:translateY(-4px); border-color:var(--electric); }
+  .deliv .badge{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:#fff; background:var(--electric); width:27px; height:27px; border-radius:6px; display:flex; align-items:center; justify-content:center; flex-shrink:0; }
+  .deliv .txt{ font-size:13.5px; padding-top:4px; color:var(--dark-ink); font-weight:500; }
+  .deliv .check{ margin-left:auto; color:var(--good); font-size:13px; padding-top:5px; }
+
+  /* ================= redes (dark) ================= */
+  .stat-grid6{ display:grid; grid-template-columns:repeat(3,1fr); gap:14px; margin-top:48px; }
+  .stat6{
+    background:var(--panel); border:1px solid var(--line); border-radius:var(--r);
+    padding:24px; min-height:150px; display:flex; flex-direction:column; justify-content:space-between;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .stat6:hover{ transform:translateY(-4px); border-color:rgba(43,217,234,.45); }
   .stat6 .lbl{ font-size:13px; color:var(--ink-dim); }
-  .stat6 .val{ margin-top:10px; font-family:'Space Grotesk',sans-serif; font-size:28px; font-weight:600; }
-  .stat6 .trend{ margin-top:8px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; display:inline-flex; align-items:center; gap:4px; }
+  .stat6 .val{ margin-top:14px; font-family:'Space Grotesk',sans-serif; font-size:clamp(32px,3.4vw,44px); font-weight:600; letter-spacing:-.045em; line-height:1; }
+  .stat6 .trend{ margin-top:12px; font-family:'IBM Plex Mono',monospace; font-size:12.5px; display:inline-flex; align-items:center; gap:5px; }
   .stat6 .trend.up{ color:var(--good); }
   .stat6 .trend.down{ color:var(--critical); }
+  .stat6.featured{ background:linear-gradient(135deg, var(--electric), #2fb9d8); border-color:transparent; }
+  .stat6.featured .lbl{ color:rgba(6,16,36,.75); font-weight:600; }
+  .stat6.featured .val{ color:#061024; }
+  .stat6.featured .trend.up{ color:#04421f; }
   @media (max-width:760px){ .stat-grid6{ grid-template-columns:repeat(2,1fr); } }
   @media (max-width:460px){ .stat-grid6{ grid-template-columns:1fr; } }
 
-  .meta-row{ margin-top:28px; display:flex; gap:30px; flex-wrap:wrap; font-size:13.5px; color:var(--ink-dim); }
+  .meta-row{ margin-top:32px; display:flex; gap:14px; flex-wrap:wrap; }
+  .meta-row span{
+    font-size:13px; color:var(--ink-dim);
+    border:1px solid var(--line); border-radius:999px; padding:9px 16px;
+  }
   .meta-row strong{ color:var(--ink); font-weight:600; }
 
-  /* ================= reviews ================= */
-  .rev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-top:44px; }
-  .rev{ background:var(--navy-900); border:1px solid var(--line); border-radius:var(--radius); padding:22px 22px; }
-  .rev .loc{ font-weight:600; font-size:14.5px; }
-  .rev .place{ font-size:12px; color:var(--ink-faint); margin-top:3px; }
-  .rev .rating-row{ margin-top:16px; display:flex; align-items:baseline; gap:10px; }
-  .rev .num{ font-family:'Space Grotesk',sans-serif; font-size:26px; font-weight:600; color:var(--warn); }
-  .rev .count{ font-size:12px; color:var(--ink-faint); }
-  .stars{ position:relative; display:inline-block; font-size:15px; line-height:1; margin-top:10px; letter-spacing:2px; }
-  .stars .bg{ color:rgba(255,255,255,.14); }
-  .stars .fg{ position:absolute; inset:0; overflow:hidden; color:var(--warn); white-space:nowrap; }
-  .rev .note{ margin-top:12px; font-size:11.5px; color:var(--ink-faint); font-style:italic; }
-
-  .insight{ margin-top:30px; padding:20px 24px; border-left:3px solid var(--bios-blue); background:rgba(59,130,232,.07); border-radius:0 var(--radius) var(--radius) 0; font-size:15px; color:var(--ink); }
-  .footnote{ margin-top:16px; font-size:12px; color:var(--ink-faint); }
-
-  /* ================= next-quarter ================= */
-  .next-card{
-    margin-top:44px; border:1px solid var(--line-strong); border-radius:22px; padding:clamp(28px,4vw,48px);
-    background:linear-gradient(135deg, rgba(59,130,232,.10), rgba(24,180,204,.06));
+  /* ================= reputación (light) ================= */
+  .rev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-top:42px; }
+  .rev{
+    background:var(--card); border:1px solid var(--line-light); border-radius:var(--r); padding:22px;
+    box-shadow:0 10px 24px rgba(23,48,84,.06);
+    transition:transform .25s ease, border-color .25s ease;
   }
-  .next-card p{ font-size:clamp(17px,2vw,21px); line-height:1.65; max-width:66ch; color:var(--ink); margin:0; }
-  .next-card .tags{ margin-top:28px; display:flex; gap:10px; flex-wrap:wrap; }
-  .next-card .tag{ font-family:'IBM Plex Mono',monospace; font-size:12px; padding:6px 14px; border-radius:999px; border:1px solid var(--line-strong); color:var(--ink-dim); }
+  .rev:hover{ transform:translateY(-4px); border-color:var(--electric); }
+  .rev .loc{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; color:var(--dark-ink); letter-spacing:-.01em; }
+  .rev .place{ font-size:12px; color:var(--dark-ink-dim); margin-top:4px; }
+  .rev .rating-row{ margin-top:18px; display:flex; align-items:baseline; gap:10px; }
+  .rev .num{ font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:600; letter-spacing:-.04em; color:var(--dark-ink); }
+  .rev .count{ font-size:12px; color:var(--dark-ink-dim); }
+  .stars{ position:relative; display:inline-block; font-size:15px; line-height:1; margin-top:10px; letter-spacing:2px; }
+  .stars .bg{ color:#d8e0ea; }
+  .stars .fg{ position:absolute; inset:0; overflow:hidden; color:#eda72f; white-space:nowrap; }
+  .rev .note{ margin-top:12px; font-size:11.5px; color:var(--dark-ink-dim); font-style:italic; line-height:1.5; }
 
-  /* ================= quarterly strategy ================= */
-  .strategy-slide{ min-height:auto; padding-top:clamp(120px,12vw,170px); padding-bottom:clamp(90px,10vw,150px); overflow:visible; }
-  .strategy-slide .slide-inner{ max-width:1240px; }
-  .strategy-intro{ margin-top:38px; display:grid; grid-template-columns:minmax(0,1.15fr) minmax(260px,.85fr); gap:22px; align-items:stretch; }
-  .strategy-intro .intro-copy, .strategy-intro .pillars{ border:1px solid var(--line-strong); border-radius:24px; padding:clamp(24px,3vw,38px); background:linear-gradient(145deg,rgba(59,130,232,.12),rgba(24,180,204,.05)); }
-  .strategy-intro p{ margin:0; color:var(--ink); font-size:clamp(17px,1.8vw,21px); line-height:1.65; }
-  .strategy-intro .pillars{ display:flex; flex-direction:column; justify-content:center; gap:11px; }
-  .pillar{ display:flex; align-items:center; gap:12px; color:var(--ink-dim); font-size:14px; }
-  .pillar i{ width:10px; height:10px; border-radius:50%; background:var(--partum-teal); box-shadow:0 0 0 6px rgba(24,180,204,.12); flex:0 0 auto; }
-  .strategy-block{ margin-top:54px; padding-top:34px; border-top:1px solid var(--line); }
-  .strategy-block h3{ font-size:clamp(24px,3vw,38px); line-height:1.12; }
-  .strategy-block h3 span{ display:block; color:var(--partum-teal); font-size:.62em; margin-bottom:9px; letter-spacing:.02em; }
-  .strategy-block > p{ max-width:76ch; color:var(--ink-dim); margin:18px 0 0; font-size:15px; line-height:1.7; }
-  .strategy-grid{ display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin-top:24px; }
-  .strategy-item{ border:1px solid var(--line); border-radius:16px; padding:22px; background:rgba(10,18,32,.78); transition:transform .25s ease,border-color .25s ease,background .25s ease; }
-  .strategy-item:hover{ transform:translateY(-4px); border-color:rgba(24,180,204,.5); background:rgba(17,31,54,.9); }
-  .strategy-item h4{ margin:0 0 10px; font-family:'Space Grotesk',sans-serif; font-size:17px; }
-  .strategy-item p{ margin:0; color:var(--ink-dim); font-size:14px; line-height:1.65; }
-  .strategy-item ul, .strategy-list{ margin:12px 0 0; padding-left:19px; color:var(--ink-dim); font-size:14px; line-height:1.7; }
-  .strategy-item li::marker, .strategy-list li::marker{ color:var(--partum-teal); }
-  .strategy-list{ columns:2; column-gap:40px; }
-  .strategy-list li{ break-inside:avoid; margin-bottom:5px; }
-  .strategy-label{ display:inline-flex; font:500 11px 'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.08em; color:var(--bios-blue); margin-bottom:12px; }
-  .closing .lockup-big img.bios{ height:clamp(68px,10vw,120px); }
-  .closing .lockup-big img.partum{ height:clamp(48px,7vw,88px); }
-  @media (max-width:760px){ .strategy-intro,.strategy-grid{ grid-template-columns:1fr; } .strategy-list{ columns:1; } .strategy-slide{ padding-top:105px; } }
+  .verdict{
+    margin-top:36px; border-radius:var(--r); overflow:hidden;
+    display:grid; grid-template-columns:minmax(180px,.36fr) 1fr;
+    background:linear-gradient(120deg, var(--electric), #2fb9d8);
+  }
+  .verdict .score{
+    display:flex; flex-direction:column; justify-content:center; gap:4px;
+    padding:clamp(22px,3vw,34px); border-right:1px solid rgba(6,16,36,.18);
+  }
+  .verdict .score .big{ font-family:'Space Grotesk',sans-serif; font-size:clamp(48px,6vw,76px); font-weight:600; letter-spacing:-.05em; line-height:1; color:#061024; }
+  .verdict .score .cap{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(6,16,36,.65); }
+  .verdict .txt{ padding:clamp(22px,3vw,34px); display:flex; align-items:center; font-size:clamp(15px,1.7vw,18px); line-height:1.6; color:#061024; font-weight:500; }
+  @media (max-width:640px){ .verdict{ grid-template-columns:1fr; } .verdict .score{ border-right:0; border-bottom:1px solid rgba(6,16,36,.18); } }
 
-  /* ================= closing ================= */
-  .closing{ align-items:center; text-align:center; }
+  /* ================= estrategia (dark) ================= */
+  .strategy-slide{ min-height:auto; }
+  .strategy-intro{ margin-top:44px; display:grid; grid-template-columns:minmax(0,1.35fr) minmax(280px,.65fr); gap:14px; align-items:stretch; }
+  .strategy-intro .intro-copy{
+    border-radius:var(--r); padding:clamp(26px,3.4vw,42px);
+    background:linear-gradient(135deg, var(--electric), #2fb9d8);
+    display:flex; flex-direction:column; justify-content:flex-end; min-height:220px;
+  }
+  .strategy-intro .intro-copy p{ margin:0; color:#061024; font-size:clamp(26px,3.6vw,50px); line-height:1.02; letter-spacing:-.05em; font-family:'Space Grotesk',sans-serif; font-weight:600; max-width:14ch; }
+  .strategy-label{
+    display:inline-block; font:500 11px 'IBM Plex Mono',monospace; text-transform:uppercase; letter-spacing:.12em;
+    color:rgba(6,16,36,.7); border-bottom:1px solid rgba(6,16,36,.3); padding-bottom:12px; margin-bottom:auto; width:max-content;
+  }
+  .strategy-intro .pillars{
+    border-radius:var(--r); padding:clamp(24px,3vw,34px);
+    background:var(--panel); border:1px solid var(--line);
+    display:flex; flex-direction:column; justify-content:center;
+  }
+  .pillar{ display:flex; align-items:center; gap:12px; color:var(--ink-dim); font-size:14px; padding:12px 0; border-bottom:1px solid var(--line); }
+  .pillar:last-child{ border-bottom:0; }
+  .pillar i{ width:9px; height:9px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 5px rgba(43,217,234,.14); flex:0 0 auto; }
+
+  .strategy-block{ margin-top:64px; padding-top:38px; border-top:1px solid var(--line); position:relative; }
+  .strategy-block::before{ content:""; position:absolute; top:-1px; left:0; width:96px; height:3px; background:linear-gradient(90deg, var(--cyan), var(--electric)); }
+  .strategy-block h3{ font-size:clamp(28px,3.8vw,52px); line-height:1.04; letter-spacing:-.045em; font-weight:600; }
+  .strategy-block h3 span{ display:block; color:var(--cyan); font:500 12px 'IBM Plex Mono',monospace; letter-spacing:.16em; text-transform:uppercase; margin-bottom:14px; }
+  .strategy-block > p{ max-width:68ch; color:var(--ink-dim); margin:18px 0 0; font-size:15.5px; line-height:1.75; }
+  .strategy-grid{ display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); gap:13px; margin-top:28px; }
+  .strategy-item{
+    border-radius:var(--r); min-height:180px; padding:24px;
+    background:var(--panel); border:1px solid var(--line);
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .strategy-item:hover{ transform:translateY(-4px); border-color:rgba(43,217,234,.45); }
+  .strategy-item h4{ margin:0 0 12px; font-size:17px; letter-spacing:-.015em; }
+  .strategy-item p{ margin:0; color:var(--ink-dim); font-size:13.5px; line-height:1.7; }
+  .strategy-item ul{ margin:6px 0 0; padding-left:18px; color:var(--ink-dim); font-size:13.5px; line-height:1.75; }
+  .strategy-item li::marker{ color:var(--cyan); }
+  .strategy-item.featured{ background:linear-gradient(135deg, var(--electric), #2fb9d8); border-color:transparent; }
+  .strategy-item.featured h4{ color:#061024; }
+  .strategy-item.featured p, .strategy-item.featured ul, .strategy-item.featured li{ color:rgba(6,16,36,.85); }
+  .strategy-item.featured li::marker{ color:#061024; }
+  .strategy-list{ margin:22px 0 0; padding-left:19px; color:var(--ink-dim); font-size:14px; line-height:1.75; columns:2; column-gap:44px; max-width:960px; }
+  .strategy-list li{ break-inside:avoid; margin-bottom:7px; }
+  .strategy-list li::marker{ color:var(--cyan); }
+  .strategy-list strong{ color:var(--ink); }
+
+  .insight{
+    margin-top:34px; padding:24px 28px; border-radius:var(--r); max-width:960px;
+    border-left:3px solid var(--cyan);
+    background:linear-gradient(90deg, rgba(43,217,234,.12), rgba(62,99,255,.05));
+    font-size:16px; color:var(--ink); line-height:1.65;
+  }
+  @media (max-width:900px){ .strategy-grid{ grid-template-columns:repeat(2,minmax(0,1fr)); } }
+  @media (max-width:760px){
+    .strategy-intro{ grid-template-columns:1fr; }
+    .strategy-grid{ grid-template-columns:1fr; }
+    .strategy-list{ columns:1; }
+    .strategy-item{ min-height:0; }
+  }
+
+  /* ================= cierre ================= */
+  .closing{ align-items:center; text-align:center; background:linear-gradient(150deg,#081227,#0d1d42); }
+  .closing::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 700px 460px at 50% 110%, rgba(62,99,255,.28), transparent 65%);
+  }
   .closing .slide-inner{ display:flex; flex-direction:column; align-items:center; }
   .closing .lockup-big{ margin-top:0; }
-  .closing h2{ margin-top:40px; font-size:clamp(28px,4.4vw,46px); }
-  .closing .fine{ margin-top:22px; font-size:13.5px; color:var(--ink-faint); }
-  .closing .fine a{ color:var(--bios-blue); text-decoration:none; }
-  .closing .back{ margin-top:36px; }
+  .closing .lockup-big img.bios{ height:clamp(64px,10vw,116px); }
+  .closing .lockup-big img.partum{ height:clamp(46px,7vw,86px); }
+  .closing h2{ margin-top:44px; font-size:clamp(32px,5.4vw,64px); letter-spacing:-.045em; }
+  .closing .back{ margin-top:38px; }
   .closing .back button{
     all:unset; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-dim);
-    border:1px solid var(--line-strong); padding:10px 20px; border-radius:999px; transition:all .2s ease;
+    border:1px solid var(--line-strong); padding:11px 22px; border-radius:999px; transition:all .2s ease;
   }
-  .closing .back button:hover{ color:var(--ink); border-color:var(--bios-blue-deep); background:rgba(59,130,232,.06); }
+  .closing .back button:hover{ color:var(--ink); border-color:var(--cyan); background:rgba(43,217,234,.07); }
 
-  /* ================= visual audit / editorial deck pass ================= */
-  :root{
-    --navy-950:#060b17;
-    --navy-900:#0b1424;
-    --navy-800:#101f35;
-    --electric:#5668ff;
-    --cyan:#27d0e6;
-    --paper:#f4f7fb;
+  /* ================= marketing (dark) ================= */
+  .campaign-legend{ display:flex; gap:26px; flex-wrap:wrap; margin-top:34px; }
+  .campaign-legend span{ display:inline-flex; align-items:center; gap:9px; font-size:12.5px; color:var(--ink-dim); font-family:'IBM Plex Mono',monospace; letter-spacing:.03em; }
+  .campaign-legend i{ width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+  .leg-venta{ background:var(--cyan); box-shadow:0 0 0 4px rgba(43,217,234,.14); }
+  .leg-contacto{ background:var(--warn); box-shadow:0 0 0 4px rgba(242,181,68,.14); }
+  .leg-reconocimiento{ background:var(--good); box-shadow:0 0 0 4px rgba(52,201,141,.14); }
+
+  .campaign-summary{ display:flex; gap:14px; flex-wrap:wrap; margin-top:26px; }
+  .campaign-summary .cs{
+    border:1px solid var(--line); border-radius:999px; padding:10px 18px;
+    font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-dim);
+    display:flex; align-items:center; gap:9px;
   }
-  body{ background:var(--navy-950); }
-  .deck{ background:var(--navy-950); }
-  .slide{ padding-top:clamp(92px,9vw,132px); padding-bottom:clamp(64px,8vw,108px); }
-  .slide::before{ background:radial-gradient(ellipse 760px 520px at 4% 0%,rgba(86,104,255,.19),transparent 66%),radial-gradient(ellipse 640px 520px at 100% 86%,rgba(39,208,230,.10),transparent 65%); }
-  .slide::after{ content:""; position:absolute; inset:0; pointer-events:none; opacity:.22; background-image:linear-gradient(rgba(255,255,255,.03) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.03) 1px,transparent 1px); background-size:72px 72px; mask-image:linear-gradient(to bottom,rgba(0,0,0,.75),transparent 58%); }
-  .slide-inner{ max-width:1260px; }
-  .ghost-num{ right:clamp(-80px,-5vw,10px); top:44%; font-size:clamp(220px,31vw,520px); opacity:.72; background:linear-gradient(145deg,rgba(86,104,255,.23),rgba(39,208,230,.03)); }
-  .topbar{ padding-top:24px; }
-  .topbar .brand{ gap:14px; }
-  .topbar .brand img{ height:38px !important; filter:drop-shadow(0 6px 16px rgba(39,208,230,.12)); }
-  .topbar .brand img:last-child{ height:29px !important; }
-  .topbar .brand .x{ font-size:16px; color:var(--cyan); }
-  .topbar .idx{ color:#7487aa; font-size:11px; }
-  .eyebrow-sm{ display:inline-flex; align-items:center; gap:9px; color:var(--cyan); font-size:11px; padding:8px 12px; border:1px solid rgba(39,208,230,.28); background:rgba(39,208,230,.07); border-radius:999px; }
-  .eyebrow-sm::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--cyan); box-shadow:0 0 0 5px rgba(39,208,230,.13); }
-  .slide h2{ font-size:clamp(42px,7.2vw,88px); letter-spacing:-.055em; max-width:10ch; }
-  .slide h2 .accent{ color:var(--cyan); background:linear-gradient(100deg,var(--electric),var(--cyan)); -webkit-background-clip:text; background-clip:text; }
-  .slide .lede{ max-width:62ch; font-size:16px; color:#a9b8d1; line-height:1.7; }
-  .cover{ padding-top:clamp(72px,9vw,118px); }
-  .cover h1{ font-size:clamp(54px,10vw,132px); letter-spacing:-.07em; max-width:9ch; }
-  .cover .eyebrow{ color:var(--cyan); border-color:rgba(39,208,230,.38); background:rgba(39,208,230,.08); }
-  .cover .sub{ max-width:55ch; font-size:clamp(16px,1.7vw,20px); color:#a9b8d1; }
-  .cover .daterange{ color:#8ea2c2; border-color:rgba(255,255,255,.15); }
-  .lockup-big{ margin-top:46px; padding:28px 34px; border-color:rgba(255,255,255,.17); background:linear-gradient(120deg,rgba(86,104,255,.14),rgba(39,208,230,.04)); box-shadow:0 18px 50px rgba(0,0,0,.18); }
-  .lockup-big img.bios{ height:clamp(62px,9vw,110px); }
-  .lockup-big img.partum{ height:clamp(46px,6.3vw,80px); }
-  .lockup-big .x{ color:var(--cyan); font-size:26px; }
-  .stat-row{ gap:18px; margin-top:42px; }
-  .statcard{ min-height:170px; padding:28px; border-color:rgba(255,255,255,.14); background:linear-gradient(145deg,rgba(16,31,53,.96),rgba(11,20,36,.96)); box-shadow:0 14px 36px rgba(0,0,0,.15); position:relative; overflow:hidden; }
-  .statcard::after{ content:""; position:absolute; width:130px; height:130px; right:-44px; top:-52px; border-radius:50%; background:rgba(86,104,255,.22); filter:blur(18px); }
-  .statcard .num{ position:relative; z-index:1; color:#f6f9ff; font-size:clamp(42px,5vw,64px); letter-spacing:-.06em; }
-  .statcard .lbl{ position:relative; z-index:1; max-width:20ch; color:#99adcc; }
-  .list-panel{ margin-top:38px; border-top:1px solid rgba(255,255,255,.14); }
-  .list-row{ min-height:86px; padding:20px 14px; transition:background .25s ease,transform .25s ease; }
-  .list-row:hover{ background:rgba(86,104,255,.08); transform:translateX(5px); }
-  .list-row .name{ font-size:17px; }
-  .chip{ padding:7px 13px; }
-  .deliv-grid,.stat-grid6,.rev-grid{ margin-top:38px; gap:16px; }
-  .deliv,.stat6,.rev{ border-color:rgba(255,255,255,.13); background:linear-gradient(145deg,rgba(16,31,53,.96),rgba(11,20,36,.96)); box-shadow:0 12px 30px rgba(0,0,0,.13); transition:transform .25s ease,border-color .25s ease; }
-  .deliv:hover,.stat6:hover,.rev:hover{ transform:translateY(-5px); border-color:rgba(39,208,230,.48); }
-  .deliv{ min-height:82px; padding:20px; }
-  .deliv .badge{ color:var(--cyan); border-color:rgba(39,208,230,.35); background:rgba(39,208,230,.08); }
-  .stat6{ min-height:142px; padding:24px; }
-  .stat6 .val{ font-size:36px; letter-spacing:-.06em; }
-  .stat6 .trend.up{ color:var(--cyan); }
-  .rev .num{ color:#f4c85e; font-size:34px; }
-  .insight{ border-left-color:var(--cyan); background:linear-gradient(90deg,rgba(39,208,230,.12),rgba(86,104,255,.05)); padding:22px 26px; font-size:16px; line-height:1.65; }
-  .callout{ border-color:rgba(242,181,68,.4); background:linear-gradient(90deg,rgba(242,181,68,.12),rgba(242,181,68,.04)); }
+  .campaign-summary .cs strong{ color:var(--ink); font-size:14px; font-family:'Space Grotesk',sans-serif; }
+  .campaign-summary .cs.ok strong{ color:var(--good); }
+  .campaign-summary .cs.pre strong{ color:var(--cyan); }
+  .campaign-summary .cs.wait strong{ color:var(--warn); }
 
-  /* Strategy becomes a readable visual system: one strong headline, then a clear month card. */
-  .strategy-slide{ padding-top:clamp(112px,11vw,160px); background:linear-gradient(145deg,#07101f 0%,#0a1426 55%,#101a38 100%); }
-  .strategy-slide .slide-inner{ max-width:1280px; }
-  .strategy-slide h2{ max-width:8ch; }
-  .strategy-intro{ grid-template-columns:minmax(0,1.4fr) minmax(300px,.6fr); margin-top:42px; gap:18px; }
-  .strategy-intro .intro-copy,.strategy-intro .pillars{ border-radius:4px; border-color:rgba(255,255,255,.16); background:linear-gradient(135deg,rgba(86,104,255,.8),rgba(39,208,230,.72)); color:#06101e; box-shadow:0 20px 46px rgba(0,0,0,.18); }
-  .strategy-intro .intro-copy{ min-height:190px; display:flex; flex-direction:column; justify-content:flex-end; }
-  .strategy-intro .intro-copy p{ color:#06101e; font-size:clamp(26px,3.4vw,48px); line-height:1.03; letter-spacing:-.06em; max-width:10ch; }
-  .strategy-label{ color:#06101e; border-bottom:1px solid rgba(6,16,30,.35); padding-bottom:12px; width:max-content; }
-  .strategy-intro .pillars{ background:#0c172a; color:#ecf4ff; justify-content:flex-end; }
-  .strategy-intro .pillar{ color:#d7e2f2; padding:10px 0; border-bottom:1px solid rgba(255,255,255,.12); }
-  .strategy-intro .pillar:last-child{ border-bottom:0; }
-  .strategy-block{ margin-top:68px; padding:38px 0 0; border-top:1px solid rgba(255,255,255,.15); position:relative; }
-  .strategy-block::before{ content:""; position:absolute; top:-1px; left:0; width:96px; height:3px; background:linear-gradient(90deg,var(--cyan),var(--electric)); }
-  .strategy-block h3{ font-size:clamp(30px,4vw,56px); letter-spacing:-.055em; max-width:13ch; }
-  .strategy-block h3 span{ color:var(--cyan); font:500 12px 'IBM Plex Mono',monospace; letter-spacing:.12em; }
-  .strategy-block > p{ max-width:68ch; color:#a9b8d1; font-size:16px; line-height:1.75; }
-  .strategy-grid{ grid-template-columns:repeat(12,minmax(0,1fr)); gap:14px; }
-  .strategy-item{ grid-column:span 4; border-radius:4px; min-height:176px; padding:25px; background:#0c172a; border-color:rgba(255,255,255,.13); box-shadow:0 12px 32px rgba(0,0,0,.14); }
-  .strategy-item:nth-child(1),.strategy-item:nth-child(4){ grid-column:span 5; }
-  .strategy-item:nth-child(2),.strategy-item:nth-child(3),.strategy-item:nth-child(5),.strategy-item:nth-child(6){ grid-column:span 4; }
-  .strategy-item:nth-child(6){ background:linear-gradient(145deg,rgba(86,104,255,.72),rgba(39,208,230,.62)); border-color:transparent; }
-  .strategy-item:nth-child(6) h4,.strategy-item:nth-child(6) p,.strategy-item:nth-child(6) li{ color:#07111f; }
-  .strategy-item h4{ font-size:18px; letter-spacing:-.02em; }
-  .strategy-item p,.strategy-item ul,.strategy-list{ font-size:14px; line-height:1.72; }
-  .strategy-list{ max-width:920px; margin-top:25px; color:#d0ddf0; }
-  .strategy-block .insight{ margin-top:32px; max-width:950px; }
-  .closing{ background:linear-gradient(145deg,#081224,#101d3b); }
-  .closing h2{ max-width:none; font-size:clamp(36px,6vw,74px); }
-  @media (max-width:900px){ .strategy-item,.strategy-item:nth-child(n){ grid-column:span 6; } .strategy-item:nth-child(6){ grid-column:span 12; } }
-  @media (max-width:760px){ .slide h2,.strategy-slide h2{ font-size:clamp(40px,14vw,72px); } .strategy-intro{ grid-template-columns:1fr; } .strategy-item,.strategy-item:nth-child(n){ grid-column:span 12; } .topbar .brand img{ height:28px !important; } .topbar .brand img:last-child{ height:22px !important; } }
-  @media (prefers-reduced-motion:reduce){ .list-row:hover,.deliv:hover,.stat6:hover,.rev:hover,.strategy-item:hover{ transform:none; } }
+  .campaign-cols{ display:grid; grid-template-columns:repeat(3,1fr); gap:18px; margin-top:40px; }
+  .campaign-col-head{
+    display:flex; align-items:center; gap:10px;
+    font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:16px;
+    padding-bottom:14px; margin-bottom:16px; border-bottom:1px solid var(--line-strong);
+  }
+  .campaign-col-head i{ width:9px; height:9px; border-radius:50%; flex:0 0 auto; }
+  .campaign-col-head .tag{ margin-left:auto; font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:var(--ink-faint); text-transform:uppercase; letter-spacing:.08em; }
 
-  /* Final clarity pass: editorial pages with fewer effects and stronger reading order. */
-  .slide h2{ max-width:none; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing){ background:#f4f7fb; color:#091526; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing)::before{ background:radial-gradient(ellipse 700px 400px at 0 0,rgba(86,104,255,.09),transparent 68%),radial-gradient(ellipse 500px 420px at 100% 100%,rgba(39,208,230,.07),transparent 68%); }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing)::after{ background-image:linear-gradient(rgba(9,21,38,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(9,21,38,.04) 1px,transparent 1px); }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .topbar .brand img{ filter:brightness(0) saturate(100%); }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .topbar .brand .x{ color:#31587b; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .topbar .idx{ color:#607694; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .eyebrow-sm{ color:#155780; border-color:rgba(21,87,128,.25); background:rgba(21,87,128,.06); }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .eyebrow-sm::before{ background:#155780; box-shadow:0 0 0 5px rgba(21,87,128,.1); }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) h2{ color:#081526; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .lede{ color:#52677f; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .statcard,
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .deliv,
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .rev{ background:#fff; border-color:#d1dce8; box-shadow:0 15px 32px rgba(30,63,91,.08); color:#0b1a2c; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .statcard .num,
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .stat6 .val{ color:#0b1a2c; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .statcard .lbl,
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .stat6 .lbl,
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .rev .place,
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .rev .count{ color:#61748b; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .list-panel{ border-color:#cdd9e6; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .list-row{ border-color:#dbe4ed; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .list-row .desc{ color:#61748b; }
-  .slide:not(.cover):not(#s2):not(#s4):not(#s6):not(.closing) .insight{ color:#17334e; }
-  .strategy-slide .strategy-block{ max-width:1160px; }
-  .strategy-slide .strategy-item{ min-height:210px; }
-  .strategy-slide .strategy-item p,.strategy-slide .strategy-item li{ color:#b8c8dd; }
-  .strategy-slide .strategy-item:nth-child(6) p,.strategy-slide .strategy-item:nth-child(6) li{ color:#07111f; }
-  .slide{ overflow:visible; }
-  .cover,.closing{ overflow:hidden; }
-  @media (max-width:760px){ .strategy-slide .strategy-item{ min-height:0; } }
+  .campaign-card{
+    background:var(--panel); border:1px solid var(--line); border-left:3px solid transparent;
+    border-radius:var(--r); padding:18px; margin-bottom:12px;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .campaign-card:hover{ transform:translateY(-4px); }
+  .campaign-card .month{ font-family:'IBM Plex Mono',monospace; font-size:10.5px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-faint); }
+  .campaign-card h4{ margin:9px 0 7px; font-size:15px; letter-spacing:-.01em; line-height:1.3; }
+  .campaign-card p{ margin:0; font-size:12.5px; color:var(--ink-dim); line-height:1.62; }
+  .campaign-card .channel{ margin-top:11px; font-size:10.5px; color:var(--ink-faint); font-family:'IBM Plex Mono',monospace; letter-spacing:.03em; }
+  .campaign-card .chip{ margin-top:13px; }
+  .col-venta .campaign-card{ border-left-color:var(--cyan); }
+  .col-contacto .campaign-card{ border-left-color:var(--warn); }
+  .col-reconocimiento .campaign-card{ border-left-color:var(--good); }
+
+  .chip.preapproved{ background:rgba(43,217,234,.14); color:var(--cyan); border:1px solid rgba(43,217,234,.3); }
+
+  .system-link{
+    margin-top:38px; padding:24px 28px; border-radius:var(--r); max-width:960px;
+    border-left:3px solid var(--electric);
+    background:linear-gradient(90deg, rgba(62,99,255,.14), rgba(43,217,234,.04));
+    display:flex; align-items:flex-start; gap:16px;
+  }
+  .system-link .ico{
+    flex:0 0 auto; width:34px; height:34px; border-radius:8px;
+    background:linear-gradient(135deg, var(--electric), var(--cyan));
+    display:flex; align-items:center; justify-content:center; font-size:15px; color:#061024; font-weight:700;
+  }
+  .system-link .txt{ font-size:14.5px; color:var(--ink); line-height:1.65; }
+  .system-link .txt strong{ color:var(--cyan); }
+
+  @media (max-width:900px){ .campaign-cols{ grid-template-columns:1fr; } }
+
+  @media (prefers-reduced-motion:reduce){
+    .list-row:hover,.deliv:hover,.stat6:hover,.rev:hover,.strategy-item:hover,.campaign-card:hover{ transform:none; }
+  }
+  @media (max-width:760px){
+    .topbar .brand img{ height:24px; }
+    .topbar .brand img.partum{ height:19px; }
+    .slide h2{ font-size:clamp(38px,11vw,64px); }
+    .design-count{ text-align:left; }
+  }
 </style>
 </head>
 <body>
@@ -449,13 +511,14 @@
   <button data-target="s4"><span class="lbl">Redes</span><span class="dot"></span></button>
   <button data-target="s5"><span class="lbl">Reputación</span><span class="dot"></span></button>
   <button data-target="s6"><span class="lbl">Siguiente</span><span class="dot"></span></button>
-  <button data-target="s7"><span class="lbl">Cierre</span><span class="dot"></span></button>
+  <button data-target="s7"><span class="lbl">Marketing</span><span class="dot"></span></button>
+  <button data-target="s8"><span class="lbl">Cierre</span><span class="dot"></span></button>
 </nav>
 
 <div class="deck" id="deck">
 
   <!-- ============ COVER ============ -->
-  <section class="slide cover" id="s0">
+  <section class="slide dark cover" id="s0">
     <div class="slide-inner">
       <span class="eyebrow reveal">Partum Design × Laboratorios BIOS</span>
       <h1 class="reveal" style="--d:80ms">Reporte de<br><span class="accent">avance digital</span></h1>
@@ -472,18 +535,18 @@
   </section>
 
   <!-- ============ 01 RESUMEN ============ -->
-  <section class="slide" id="s1">
+  <section class="slide dark" id="s1">
     <div class="ghost-num">01</div>
     <div class="topbar">
-      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
-      <div class="idx">01 / 07 · RESUMEN</div>
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">01 / 08 · RESUMEN</div>
     </div>
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Corte de caja</div>
       <h2 class="reveal" style="--d:60ms">Lo que se construyó<span class="accent">en 12 semanas</span></h2>
       <p class="lede reveal" style="--d:120ms">Tres frentes trabajando en paralelo desde el 5 de mayo: el sitio, la identidad de marca y la presencia en redes sociales de Laboratorios BIOS.</p>
       <div class="stat-row">
-        <div class="statcard reveal" style="--d:180ms"><div class="num" data-count="100" data-suffix="%">0%</div><div class="lbl">Frontend del sitio, completado</div></div>
+        <div class="statcard featured reveal" style="--d:180ms"><div class="num" data-count="100" data-suffix="%">0%</div><div class="lbl">Frontend del sitio, completado</div></div>
         <div class="statcard reveal" style="--d:260ms"><div class="num"><span data-count="14">0</span><span class="unit">/18</span></div><div class="lbl">Piezas de diseño entregadas</div></div>
         <div class="statcard reveal" style="--d:340ms"><div class="num"><span data-count="8.9" data-decimals="1">0</span><span class="unit">mil</span></div><div class="lbl">Visualizaciones en Facebook, 90 días</div></div>
       </div>
@@ -491,11 +554,11 @@
   </section>
 
   <!-- ============ 02 TECNOLOGÍA ============ -->
-  <section class="slide" id="s2">
+  <section class="slide dark" id="s2">
     <div class="ghost-num">02</div>
     <div class="topbar">
-      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
-      <div class="idx">02 / 07 · TECNOLOGÍA</div>
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">02 / 08 · TECNOLOGÍA</div>
     </div>
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Área · Desarrollo</div>
@@ -504,21 +567,25 @@
 
       <div class="list-panel">
         <div class="list-row reveal" style="--d:160ms">
+          <span class="n">01</span>
           <span class="name">Frontend del sitio</span>
           <span class="desc">Home, catálogo de servicios, cotizador, pop-ups y canales de contacto, maquetados y publicados.</span>
           <span class="chip done">✓ Completado</span>
         </div>
         <div class="list-row reveal" style="--d:220ms">
+          <span class="n">02</span>
           <span class="name">Conexión con el sistema (backend)</span>
           <span class="desc">En pausa hasta definir con BIOS el proveedor del servicio de hosting e integración.</span>
           <span class="chip paused">⏸ En pausa</span>
         </div>
         <div class="list-row reveal" style="--d:280ms">
+          <span class="n">03</span>
           <span class="name">Tarjetas corporativas digitales</span>
           <span class="desc">Sistema de tarjetas de presentación digitales para el equipo BIOS, entregado y en uso.</span>
           <span class="chip done">✓ Completado</span>
         </div>
         <div class="list-row reveal" style="--d:340ms">
+          <span class="n">04</span>
           <span class="name">Bot de atención con IA</span>
           <span class="desc">Aún no se inicia; queda amarrado a la misma decisión de proveedor que el backend.</span>
           <span class="chip pending">Pendiente</span>
@@ -536,16 +603,24 @@
   </section>
 
   <!-- ============ 03 DISEÑO ============ -->
-  <section class="slide" id="s3">
+  <section class="slide light" id="s3">
     <div class="ghost-num">03</div>
     <div class="topbar">
-      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
-      <div class="idx">03 / 07 · DISEÑO</div>
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">03 / 08 · DISEÑO</div>
     </div>
     <div class="slide-inner">
-      <div class="eyebrow-sm reveal">Área · Diseño</div>
-      <h2 class="reveal" style="--d:60ms">Identidad<span class="accent">de marca</span></h2>
-      <p class="lede reveal" style="--d:120ms">Logotipo y variantes de Laboratorios BIOS y de Plaza Tauro, más toda la papelería y material de sucursal ya en circulación.</p>
+      <div class="design-head">
+        <div>
+          <div class="eyebrow-sm reveal">Área · Diseño</div>
+          <h2 class="reveal" style="--d:60ms">Identidad<span class="accent">de marca</span></h2>
+          <p class="lede reveal" style="--d:120ms">Logotipo y variantes de Laboratorios BIOS y de Plaza Tauro, más toda la papelería y material de sucursal ya en circulación.</p>
+        </div>
+        <div class="design-count reveal" style="--d:160ms">
+          <div class="big"><span data-count="14">0</span><span>/18</span></div>
+          <div class="cap">Piezas entregadas</div>
+        </div>
+      </div>
 
       <div class="deliv-grid">
         <div class="deliv reveal" style="--d:140ms"><span class="badge">01</span><span class="txt">Logotipo — BIOS y Plaza Tauro</span><span class="check">✓</span></div>
@@ -577,11 +652,11 @@
   </section>
 
   <!-- ============ 04 REDES ============ -->
-  <section class="slide" id="s4">
+  <section class="slide dark" id="s4">
     <div class="ghost-num">04</div>
     <div class="topbar">
-      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
-      <div class="idx">04 / 07 · REDES</div>
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">04 / 08 · REDES</div>
     </div>
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Área · Redes sociales</div>
@@ -589,12 +664,12 @@
       <p class="lede reveal" style="--d:120ms">7 de mayo → 4 de agosto de 2026. Las publicaciones arrancaron el 15 de mayo, desde cero.</p>
 
       <div class="stat-grid6">
-        <div class="stat6 reveal" style="--d:150ms"><div class="lbl">Visualizaciones</div><div class="val"><span data-count="8.9" data-decimals="1">0</span> mil</div><div class="trend up">▲ 253%</div></div>
-        <div class="stat6 reveal" style="--d:190ms"><div class="lbl">Espectadores</div><div class="val"><span data-count="1.5" data-decimals="1">0</span> mil</div><div class="trend up">▲ 623.2%</div></div>
-        <div class="stat6 reveal" style="--d:230ms"><div class="lbl">Interacciones con el contenido</div><div class="val"><span data-count="40">0</span></div><div class="trend up">▲ 100%</div></div>
-        <div class="stat6 reveal" style="--d:270ms"><div class="lbl">Clics en el enlace</div><div class="val"><span data-count="4">0</span></div><div class="trend down">▼ 50%</div></div>
-        <div class="stat6 reveal" style="--d:310ms"><div class="lbl">Visitas</div><div class="val"><span data-count="1.6" data-decimals="1">0</span> mil</div><div class="trend up">▲ 72%</div></div>
-        <div class="stat6 reveal" style="--d:350ms"><div class="lbl">Seguidores</div><div class="val"><span data-count="36">0</span></div><div class="trend up">▲ 157.1%</div></div>
+        <div class="stat6 featured reveal" style="--d:150ms"><div class="lbl">Visualizaciones</div><div><div class="val"><span data-count="8.9" data-decimals="1">0</span> mil</div><div class="trend up">▲ 253%</div></div></div>
+        <div class="stat6 reveal" style="--d:190ms"><div class="lbl">Espectadores</div><div><div class="val"><span data-count="1.5" data-decimals="1">0</span> mil</div><div class="trend up">▲ 623.2%</div></div></div>
+        <div class="stat6 reveal" style="--d:230ms"><div class="lbl">Interacciones con el contenido</div><div><div class="val"><span data-count="40">0</span></div><div class="trend up">▲ 100%</div></div></div>
+        <div class="stat6 reveal" style="--d:270ms"><div class="lbl">Clics en el enlace</div><div><div class="val"><span data-count="4">0</span></div><div class="trend down">▼ 50%</div></div></div>
+        <div class="stat6 reveal" style="--d:310ms"><div class="lbl">Visitas</div><div><div class="val"><span data-count="1.6" data-decimals="1">0</span> mil</div><div class="trend up">▲ 72%</div></div></div>
+        <div class="stat6 reveal" style="--d:350ms"><div class="lbl">Seguidores</div><div><div class="val"><span data-count="36">0</span></div><div class="trend up">▲ 157.1%</div></div></div>
       </div>
 
       <div class="meta-row reveal" style="--d:400ms">
@@ -606,11 +681,11 @@
   </section>
 
   <!-- ============ 05 REPUTACIÓN ============ -->
-  <section class="slide" id="s5">
+  <section class="slide light" id="s5">
     <div class="ghost-num">05</div>
     <div class="topbar">
-      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
-      <div class="idx">05 / 07 · REPUTACIÓN</div>
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">05 / 08 · REPUTACIÓN</div>
     </div>
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Diagnóstico digital</div>
@@ -657,16 +732,18 @@
         </div>
       </div>
 
-      <div class="insight reveal" style="--d:400ms">2.9★ de promedio en 288 reseñas, sumando las 5 sucursales de BIOS. Hay margen real de mejora, y ese es justamente el punto de partida para el siguiente trimestre.</div>
+      <div class="verdict reveal" style="--d:400ms">
+        <div class="score"><div class="big">2.9★</div><div class="cap">288 reseñas · 5 sucursales</div></div>
+        <div class="txt">Hay margen real de mejora, y ese es justamente el punto de partida para el siguiente trimestre: convertir la experiencia diaria de los pacientes en reputación digital.</div>
+      </div>
     </div>
   </section>
 
   <!-- ============ 06 SIGUIENTE ============ -->
-  <section class="slide strategy-slide" id="s6">
-    <div class="ghost-num">06</div>
+  <section class="slide dark strategy-slide" id="s6">
     <div class="topbar">
-      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS" style="height:16px"><span class="x">×</span><img src="assets/partum-logo-white.png" alt="Partum" style="height:13px"></div>
-      <div class="idx">06 / 07 · SIGUIENTE</div>
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">06 / 08 · SIGUIENTE</div>
     </div>
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Próximo trimestre</div>
@@ -691,7 +768,7 @@
           <article class="strategy-item"><h4>03 · Sistema de solicitud de reseñas</h4><p>Código QR por sucursal, enlace directo a Google Maps, material para recepción y salas de espera, mensaje digital para WhatsApp, texto para el personal y recordatorio posterior. Siempre dirigido a pacientes reales.</p></article>
           <article class="strategy-item"><h4>04 · Protocolo de respuesta</h4><p>Guía para reseñas positivas, neutrales, quejas, dudas, instalaciones y casos que requieran seguimiento privado. Respuestas humanas, respetuosas y personalizadas.</p></article>
           <article class="strategy-item"><h4>05 · Capacitación y comunicación interna</h4><p>Guía breve para explicar cuándo solicitar una reseña, cómo compartir el QR, qué lenguaje utilizar, qué evitar y cómo escalar una inconformidad delicada.</p></article>
-          <article class="strategy-item"><h4>Entregables del mes</h4><ul><li>Auditoría y reporte por sucursal.</li><li>Perfiles de Google optimizados.</li><li>Código QR individual y material gráfico.</li><li>Mensajes para WhatsApp y recepción.</li><li>Manual de respuestas y tablero de seguimiento.</li></ul></article>
+          <article class="strategy-item featured"><h4>Entregables del mes</h4><ul><li>Auditoría y reporte por sucursal.</li><li>Perfiles de Google optimizados.</li><li>Código QR individual y material gráfico.</li><li>Mensajes para WhatsApp y recepción.</li><li>Manual de respuestas y tablero de seguimiento.</li></ul></article>
         </div>
       </div>
 
@@ -703,7 +780,7 @@
           <article class="strategy-item"><h4>02 · Campañas de alcance por sucursal</h4><p>Campañas dirigidas a personas que viven, trabajan o transitan cerca, con llamados a Google Maps, sitio web, WhatsApp, servicios, sucursal o formulario de contacto.</p></article>
           <article class="strategy-item"><h4>03 · Optimización para búsquedas locales</h4><p>Secciones por ubicación, dirección, teléfono, horario, mapa, servicios, botones de Google Maps, títulos, descripciones, preguntas frecuentes y navegación móvil.</p></article>
           <article class="strategy-item"><h4>04 · Contenido de confianza</h4><p>Presentación del equipo, procesos, recorridos, explicación de estudios, preparación, mitos, testimonios autorizados, innovación, calidad, higiene y seguridad.</p></article>
-          <article class="strategy-item"><h4>Entregables del mes</h4><ul><li>Calendario mensual y diseños para publicaciones.</li><li>Contenido diferenciado por sucursal.</li><li>Campañas segmentadas por ubicación.</li><li>Páginas locales dentro del sitio.</li><li>Reporte de alcance, clics y visitas.</li><li>Recomendaciones de optimización.</li></ul></article>
+          <article class="strategy-item featured"><h4>Entregables del mes</h4><ul><li>Calendario mensual y diseños para publicaciones.</li><li>Contenido diferenciado por sucursal.</li><li>Campañas segmentadas por ubicación.</li><li>Páginas locales dentro del sitio.</li><li>Reporte de alcance, clics y visitas.</li><li>Recomendaciones de optimización.</li></ul></article>
         </div>
       </div>
 
@@ -716,7 +793,7 @@
           <article class="strategy-item"><h4>03 · Seguimiento de comentarios y mensajes</h4><p>Clasificación de solicitudes, precios, horarios, preparación, quejas, comentarios positivos, ubicaciones, posibles pacientes y temas que requieran atención interna.</p></article>
           <article class="strategy-item"><h4>04 · Segunda campaña de reputación</h4><p>Refuerzo en sucursales con menor crecimiento, revisando materiales, horarios, comentarios repetidos, puntos del servicio y necesidades de apoyo.</p></article>
           <article class="strategy-item"><h4>05 · Análisis y optimización trimestral</h4><p>Reporte comparativo con calificaciones, reseñas, respuestas, alcance, interacciones, visitas, clics, mejores contenidos, crecimiento, comentarios y recomendaciones.</p></article>
-          <article class="strategy-item"><h4>Entregables del mes</h4><ul><li>Calendario interactivo y piezas gráficas.</li><li>Dinámicas para historias y redes.</li><li>Seguimiento de interacciones.</li><li>Refuerzo de campaña de reseñas.</li><li>Optimización de campañas.</li><li>Reporte trimestral y propuesta siguiente.</li></ul></article>
+          <article class="strategy-item featured"><h4>Entregables del mes</h4><ul><li>Calendario interactivo y piezas gráficas.</li><li>Dinámicas para historias y redes.</li><li>Seguimiento de interacciones.</li><li>Refuerzo de campaña de reseñas.</li><li>Optimización de campañas.</li><li>Reporte trimestral y propuesta siguiente.</li></ul></article>
         </div>
       </div>
 
@@ -740,8 +817,126 @@
     </div>
   </section>
 
+  <!-- ============ 07 MARKETING ============ -->
+  <section class="slide dark" id="s7">
+    <div class="ghost-num">07</div>
+    <div class="topbar">
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">07 / 08 · MARKETING</div>
+    </div>
+    <div class="slide-inner">
+      <div class="eyebrow-sm reveal">Calendario de campañas</div>
+      <h2 class="reveal" style="--d:60ms">Campañas<span class="accent">propuestas para aprobación</span></h2>
+      <p class="lede reveal" style="--d:120ms">Un calendario ordenado por objetivo, no solo por fecha: campañas que buscan venta directa, campañas que buscan abrir una conversación, y campañas que construyen reconocimiento de marca. Cada una con su estatus de aprobación.</p>
+
+      <div class="campaign-legend reveal" style="--d:150ms">
+        <span><i class="leg-venta"></i> Venta directa</span>
+        <span><i class="leg-contacto"></i> Contacto y conversación</span>
+        <span><i class="leg-reconocimiento"></i> Reconocimiento de marca</span>
+      </div>
+
+      <div class="campaign-summary reveal" style="--d:180ms">
+        <div class="cs"><strong>9</strong> campañas propuestas</div>
+        <div class="cs ok"><strong>3</strong> aprobadas</div>
+        <div class="cs pre"><strong>3</strong> pre-aprobadas</div>
+        <div class="cs wait"><strong>3</strong> por aprobar</div>
+      </div>
+
+      <div class="campaign-cols">
+        <div class="col-venta reveal" style="--d:200ms">
+          <div class="campaign-col-head"><i class="leg-venta"></i> Venta directa <span class="tag">3 campañas</span></div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 1</div>
+            <h4>Reactivación de cotizaciones</h4>
+            <p>Impulsa a quienes ya cotizaron un estudio a agendar su cita, con recordatorio directo y oferta de vigencia limitada.</p>
+            <div class="channel">WHATSAPP · FACEBOOK ADS</div>
+            <span class="chip preapproved">◐ Pre-aprobada</span>
+          </div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 2</div>
+            <h4>Paquetes de estudios preventivos</h4>
+            <p>Promoción por sucursal de paquetes de laboratorio con precio especial, dirigida a quienes ya interactuaron con BIOS.</p>
+            <div class="channel">META ADS · SITIO WEB</div>
+            <span class="chip pending">○ Por aprobar</span>
+          </div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 3</div>
+            <h4>Cierre de trimestre</h4>
+            <p>Convierte el alcance acumulado de los dos meses previos en citas agendadas, con landing y cotizador conectado.</p>
+            <div class="channel">ADS · LANDING + COTIZADOR</div>
+            <span class="chip pending">○ Por aprobar</span>
+          </div>
+        </div>
+
+        <div class="col-contacto reveal" style="--d:240ms">
+          <div class="campaign-col-head"><i class="leg-contacto"></i> Contacto <span class="tag">3 campañas</span></div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 1</div>
+            <h4>Activación de WhatsApp</h4>
+            <p>Invita a la audiencia a resolver dudas antes de su estudio directamente por WhatsApp, con botón fijo en cada publicación.</p>
+            <div class="channel">WHATSAPP BUSINESS · REDES</div>
+            <span class="chip done">✓ Aprobada</span>
+          </div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 2</div>
+            <h4>Preguntas frecuentes en vivo</h4>
+            <p>Genera conversación directa resolviendo dudas comunes sobre estudios, preparación y tiempos de entrega.</p>
+            <div class="channel">INSTAGRAM · FACEBOOK</div>
+            <span class="chip preapproved">◐ Pre-aprobada</span>
+          </div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 3</div>
+            <h4>Agenda rápida</h4>
+            <p>Formulario corto de contacto para pedir información o agendar cita con un solo paso, sin salir de la conversación.</p>
+            <div class="channel">SITIO WEB · META ADS</div>
+            <span class="chip pending">○ Por aprobar</span>
+          </div>
+        </div>
+
+        <div class="col-reconocimiento reveal" style="--d:280ms">
+          <div class="campaign-col-head"><i class="leg-reconocimiento"></i> Reconocimiento <span class="tag">3 campañas</span></div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 1</div>
+            <h4>Presentación de identidad renovada</h4>
+            <p>Da a conocer el nuevo logotipo y la imagen actualizada de BIOS en redes y en cada sucursal.</p>
+            <div class="channel">REDES · SUCURSALES</div>
+            <span class="chip done">✓ Aprobada</span>
+          </div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 2</div>
+            <h4>Historias de sucursal</h4>
+            <p>Contenido con equipo, instalaciones y proceso de atención para generar cercanía con la comunidad local.</p>
+            <div class="channel">INSTAGRAM · FACEBOOK</div>
+            <span class="chip done">✓ Aprobada</span>
+          </div>
+
+          <div class="campaign-card">
+            <div class="month">Mes 3</div>
+            <h4>Temporada de salud</h4>
+            <p>Campaña de alcance ligada a una fecha relevante de salud pública, para reforzar presencia de marca en la zona.</p>
+            <div class="channel">ADS · CONTENIDO</div>
+            <span class="chip preapproved">◐ Pre-aprobada</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="system-link reveal" style="--d:320ms">
+        <div class="ico">⇄</div>
+        <div class="txt">Toda campaña con formulario, cotizador o botón de contacto <strong>redirige al sitio web</strong>, y queda lista para conectarse con el sistema de BIOS en cuanto se defina el proveedor de hosting e integración — así cada lead se puede dar seguimiento desde el primer clic hasta la cita agendada.</div>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ CIERRE ============ -->
-  <section class="slide closing" id="s7">
+  <section class="slide closing" id="s8">
     <div class="slide-inner">
       <div class="lockup-big reveal" style="--d:60ms">
         <img class="bios" src="assets/bios-logo-white.png" alt="Laboratorios BIOS" />
