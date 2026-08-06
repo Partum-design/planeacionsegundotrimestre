@@ -523,6 +523,20 @@
   .system-link .txt{ font-size:14.5px; color:var(--ink); line-height:1.65; }
   .system-link .txt strong{ color:var(--cyan); }
 
+  .service-note{
+    margin-top:16px; padding-top:14px;
+    border-top:1px solid rgba(157,174,201,.16);
+    display:flex; align-items:flex-start; gap:12px; flex-wrap:wrap;
+  }
+  .service-note .tagline{
+    flex:0 0 auto; font-family:'IBM Plex Mono',monospace;
+    font-size:10.5px; letter-spacing:.12em; text-transform:uppercase;
+    color:var(--ink-dim); padding:5px 10px; border-radius:999px;
+    border:1px solid rgba(157,174,201,.28); background:rgba(157,174,201,.07);
+  }
+  .service-note p{ flex:1 1 260px; margin:0; font-size:13.5px; color:var(--ink-dim); line-height:1.65; }
+  .service-note p b{ color:var(--ink); font-weight:600; }
+
   @media (max-width:900px){ .campaign-cols{ grid-template-columns:1fr; } }
 
   @media (prefers-reduced-motion:reduce){
@@ -1049,7 +1063,13 @@
 
       <div class="system-link reveal" style="--d:320ms">
         <div class="ico">⇄</div>
-        <div class="txt">Toda campaña con formulario, cotizador o botón de contacto <strong>redirige al sitio web</strong>, y queda lista para conectarse con el sistema de BIOS en cuanto se defina el proveedor de hosting e integración — así cada lead se puede dar seguimiento desde el primer clic hasta la cita agendada.</div>
+        <div class="txt">
+          Toda campaña con formulario, cotizador o botón de contacto <strong>redirige al sitio web</strong>, y queda lista para conectarse con el sistema de BIOS en cuanto se defina el proveedor de hosting e integración — así cada lead se puede dar seguimiento desde el primer clic hasta la cita agendada.
+          <div class="service-note">
+            <span class="tagline">Servicio complementario</span>
+            <p>Este plan cubre la <b>estrategia, el contenido y el diseño</b> de cada campaña. Cuando una pieza requiera desarrollo a la medida — landings nuevas, formularios, cotizador o integraciones con el sistema — lo trabajamos como un <b>servicio adicional</b>, con su propio alcance y cotización. Lo dejamos planteado desde ahora para que BIOS pueda activarlo en el momento que convenga.</p>
+          </div>
+        </div>
       </div>
     </div>
   </section>
