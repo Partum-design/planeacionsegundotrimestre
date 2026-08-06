@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Estrategia trimestral · BIOS × Partum Design</title>
-<meta name="description" content="Presentación digital del segundo trimestre 2026: desarrollo web, identidad de marca y redes sociales para Laboratorios BIOS." />
+<title>Reporte de avance · BIOS × Partum Design</title>
+<meta name="description" content="Recopilatorio del primer trimestre 2026 (Fase de Cimentación): desarrollo web, identidad de marca y redes sociales para Laboratorios BIOS." />
 <link rel="icon" href="assets/favicon.png" />
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -259,6 +259,7 @@
   .chip.done{ background:rgba(52,201,141,.14); color:var(--good); border:1px solid rgba(52,201,141,.3); }
   .chip.paused{ background:rgba(242,181,68,.13); color:var(--warn); border:1px solid rgba(242,181,68,.3); }
   .chip.pending{ background:rgba(157,174,201,.1); color:var(--ink-dim); border:1px solid var(--line); }
+  .chip.partial{ background:rgba(43,217,234,.14); color:var(--cyan); border:1px solid rgba(43,217,234,.3); }
 
   .callout{
     margin-top:36px; padding:24px 28px; border-radius:var(--r);
@@ -317,6 +318,40 @@
     border:1px solid var(--line); border-radius:999px; padding:9px 16px;
   }
   .meta-row strong{ color:var(--ink); font-weight:600; }
+
+  /* ================= reputación · desglose por tema (light) ================= */
+  .topic-panel{ margin-top:52px; padding-top:38px; border-top:1px solid var(--line-light); }
+  .topic-panel h3{ font-size:clamp(22px,2.6vw,30px); letter-spacing:-.03em; color:var(--dark-ink); font-weight:600; }
+  .topic-panel h3 span{ display:block; color:var(--electric-deep); font:500 11.5px 'IBM Plex Mono',monospace; letter-spacing:.14em; text-transform:uppercase; margin-bottom:12px; }
+  .topic-note{ margin-top:14px; font-size:13px; color:var(--dark-ink-dim); max-width:70ch; line-height:1.65; }
+  .topic-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:28px; }
+  .topic-card{
+    background:var(--card); border:1px solid var(--line-light); border-radius:var(--r); padding:22px;
+    box-shadow:0 10px 24px rgba(23,48,84,.06);
+  }
+  .topic-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+  .topic-loc{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:var(--dark-ink); letter-spacing:-.01em; }
+  .topic-loc small{ display:block; font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:var(--dark-ink-dim); margin-top:3px; }
+  .topic-pr{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .topic-pr.critica{ color:var(--critical); background:rgba(239,90,111,.1); border:1px solid rgba(239,90,111,.28); }
+  .topic-pr.alta{ color:#c07a12; background:rgba(242,181,68,.14); border:1px solid rgba(242,181,68,.35); }
+  .topic-pr.media{ color:var(--electric-deep); background:rgba(62,99,255,.1); border:1px solid rgba(62,99,255,.24); }
+  .t-row{ margin-bottom:12px; }
+  .t-row:last-child{ margin-bottom:0; }
+  .t-top{ display:flex; justify-content:space-between; gap:10px; font-size:12px; margin-bottom:6px; }
+  .t-top .t-lbl{ color:var(--dark-ink); }
+  .t-top .t-val{ font-family:'IBM Plex Mono',monospace; color:var(--dark-ink-dim); font-size:11px; flex:0 0 auto; }
+  .t-track{ height:7px; border-radius:4px; background:#e3e9f1; overflow:hidden; }
+  .t-fill{ height:100%; border-radius:4px; background:linear-gradient(90deg,var(--electric-deep),var(--electric)); }
+  .topic-foot{ margin-top:16px; padding-top:14px; border-top:1px solid var(--line-light); font-size:11.5px; color:var(--dark-ink-dim); line-height:1.6; }
+  .topic-foot strong{ color:var(--dark-ink); }
+  .topic-summary{
+    margin-top:20px; padding:22px 26px; border-radius:var(--r);
+    background:#fff7e8; border:1px solid #ecc57a; font-size:13px; color:var(--dark-ink); line-height:1.7;
+  }
+  .topic-summary strong{ color:var(--dark-ink); }
+  .topic-summary ol{ margin:10px 0 0; padding-left:18px; }
+  .topic-summary li{ margin-bottom:4px; }
 
   /* ================= reputación (light) ================= */
   .rev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-top:42px; }
@@ -522,7 +557,7 @@
     <div class="slide-inner">
       <span class="eyebrow reveal">Partum Design × Laboratorios BIOS</span>
       <h1 class="reveal" style="--d:80ms">Reporte de<br><span class="accent">avance digital</span></h1>
-      <p class="sub reveal" style="--d:160ms">Presentación del segundo trimestre: lo que se construyó en desarrollo web, identidad de marca y redes sociales, y hacia dónde va el trabajo en los próximos meses.</p>
+      <p class="sub reveal" style="--d:160ms">Recopilatorio del primer trimestre <span class="mono" style="color:var(--cyan); font-size:.7em;">(Fase de Cimentación)</span>: lo que se construyó en desarrollo web, identidad de marca y redes sociales, y hacia dónde va el trabajo en los próximos meses.</p>
       <div class="daterange reveal" style="--d:220ms"><span class="dot"></span> 05 MAY 2026 → 05 AGO 2026 · 12 SEMANAS · 3 ÁREAS</div>
 
       <div class="lockup-big animate reveal" style="--d:280ms">
@@ -575,8 +610,8 @@
         <div class="list-row reveal" style="--d:220ms">
           <span class="n">02</span>
           <span class="name">Conexión con el sistema (backend)</span>
-          <span class="desc">En pausa hasta definir con BIOS el proveedor del servicio de hosting e integración.</span>
-          <span class="chip paused">⏸ En pausa</span>
+          <span class="desc">Desarrollo parcial: ya existe un backend propio, en el que se están cargando los 729 servicios del catálogo. La integración completa con el sitio queda a la espera de definir con BIOS el proveedor de hosting.</span>
+          <span class="chip partial">◐ Desarrollo parcial</span>
         </div>
         <div class="list-row reveal" style="--d:280ms">
           <span class="n">03</span>
@@ -593,7 +628,7 @@
       </div>
 
       <div class="callout reveal" style="--d:400ms">
-        <div class="callout-lbl">Para destrabar el próximo trimestre</div>
+        <div class="callout-lbl">Para destrabar la siguiente fase</div>
         <ul>
           <li>Definir proveedor del servicio y retomar la conexión con el sistema</li>
           <li>Arrancar el desarrollo del bot de atención automática con IA</li>
@@ -702,7 +737,7 @@
     <div class="slide-inner">
       <div class="eyebrow-sm reveal">Diagnóstico digital</div>
       <h2 class="reveal" style="--d:60ms">Reputación<span class="accent">sucursal por sucursal</span></h2>
-      <p class="lede reveal" style="--d:120ms">Así nos ve hoy la gente en Google, ficha por ficha. Este es el punto de partida del trabajo del próximo trimestre.</p>
+      <p class="lede reveal" style="--d:120ms">Así nos ve hoy la gente en Google, ficha por ficha. Este es el punto de partida del trabajo de la siguiente fase.</p>
 
       <div class="rev-grid">
         <div class="rev reveal" style="--d:150ms">
@@ -746,7 +781,78 @@
 
       <div class="verdict reveal" style="--d:400ms">
         <div class="score"><div class="big">2.9★</div><div class="cap">288 reseñas · 5 sucursales</div></div>
-        <div class="txt">Hay margen real de mejora, y ese es justamente el punto de partida para el siguiente trimestre: convertir la experiencia diaria de los pacientes en reputación digital.</div>
+        <div class="txt">Hay margen real de mejora, y ese es justamente el punto de partida para la siguiente fase: convertir la experiencia diaria de los pacientes en reputación digital.</div>
+      </div>
+
+      <div class="topic-panel reveal" style="--d:440ms">
+        <h3><span>Lectura por sucursal · corte 6 ago 2026</span>¿De qué se queja la gente, ficha por ficha?</h3>
+        <p class="topic-note">Lectura del contenido de las reseñas de Google de cada sucursal, agrupado por tema. Una misma reseña puede tocar varios temas a la vez, así que los porcentajes son aproximados y no suman 100%. Plaza Tauro no se incluye: solo tiene 1 reseña.</p>
+
+        <div class="topic-grid">
+          <div class="topic-card">
+            <div class="topic-head">
+              <div class="topic-loc">Laboratorio BIOS<small>Av. Huehuetoca · 2.8★ · 47 reseñas</small></div>
+              <span class="topic-pr alta">Prioridad alta</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Servicio y atención</span><span class="t-val">~45%</span></div><div class="t-track"><div class="t-fill" style="width:45%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Personal</span><span class="t-val">~28%</span></div><div class="t-track"><div class="t-fill" style="width:28%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Resultados y comunicación</span><span class="t-val">~23%</span></div><div class="t-track"><div class="t-fill" style="width:23%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Teléfono y cotizaciones</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Precio</span><span class="t-val">~8%</span></div><div class="t-track"><div class="t-fill" style="width:8%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> el servicio depende demasiado de personas específicas — bueno cuando atiende alguien en particular, inconsistente cuando hay saturación.</div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-head">
+              <div class="topic-loc">BIOS — Soriana Paseo La Joya<small>3.0★ · 62 reseñas</small></div>
+              <span class="topic-pr alta">Prioridad media-alta</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Ultrasonidos y especialistas</span><span class="t-val">~30%</span></div><div class="t-track"><div class="t-fill" style="width:30%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Recepción y personal admin.</span><span class="t-val">~23%</span></div><div class="t-track"><div class="t-fill" style="width:23%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Tiempos de espera</span><span class="t-val">~18%</span></div><div class="t-track"><div class="t-fill" style="width:18%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Pagos y costos</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> la experiencia durante los ultrasonidos y el primer contacto en recepción. Sí hay reseñas que reconocen buen trato humano.</div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-head">
+              <div class="topic-loc">BIOS Sucursal Cantú<small>2.8★ · 146 reseñas</small></div>
+              <span class="topic-pr critica">Prioridad crítica</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Tiempos de espera</span><span class="t-val">~14%</span></div><div class="t-track"><div class="t-fill" style="width:14%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Ultrasonidos</span><span class="t-val">~10%</span></div><div class="t-track"><div class="t-fill" style="width:10%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Radiografías e interpretación</span><span class="t-val">~7%</span></div><div class="t-track"><div class="t-fill" style="width:7%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Personal de recepción</span><span class="t-val">~6%</span></div><div class="t-track"><div class="t-fill" style="width:6%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Costos y pagos</span><span class="t-val">~5%</span></div><div class="t-track"><div class="t-fill" style="width:5%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Toma de muestras y trato clínico</span><span class="t-val">~5%</span></div><div class="t-track"><div class="t-fill" style="width:5%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Limpieza e instalaciones</span><span class="t-val">~5%</span></div><div class="t-track"><div class="t-fill" style="width:5%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> es la sucursal con más reseñas y la más delicada. No hay un solo tema dominante — se reparte entre recepción, especialistas, toma de muestras, facturación y espera. Debe ser la primera en intervenir.</div>
+          </div>
+
+          <div class="topic-card">
+            <div class="topic-head">
+              <div class="topic-loc">BIOS — San Sebastián / Tepojaco<small>3.5★ · 14 reseñas</small></div>
+              <span class="topic-pr media">Prioridad media</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Entrega de resultados e interpretaciones</span><span class="t-val">~30%</span></div><div class="t-track"><div class="t-fill" style="width:30%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Ultrasonido y especialista</span><span class="t-val">~23%</span></div><div class="t-track"><div class="t-fill" style="width:23%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Pagos con tarjeta</span><span class="t-val">~18%</span></div><div class="t-track"><div class="t-fill" style="width:18%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Personal</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Instalaciones y equipo</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> incumplimiento de fechas prometidas para interpretaciones y falta de terminal bancaria. Es la sucursal mejor calificada, pero con estos dos puntos por corregir.</div>
+          </div>
+        </div>
+
+        <div class="topic-summary">
+          <strong>Lectura general:</strong> la reputación de BIOS no parece estar afectada principalmente por el establecimiento físico, sino por la experiencia operativa — recepción, tiempos de espera, trato de especialistas, entrega de resultados y falta de canales rápidos como WhatsApp.
+          <ol>
+            <li><strong>Sucursal Cantú</strong> — atención inmediata por volumen y variedad de quejas.</li>
+            <li><strong>Av. Huehuetoca</strong> — mejorar recepción, teléfono y entrega de resultados.</li>
+            <li><strong>Soriana Paseo La Joya</strong> — revisar protocolo de ultrasonidos y puntualidad de especialistas.</li>
+            <li><strong>San Sebastián / Tepojaco</strong> — corregir entregas, interpretaciones y medios de pago.</li>
+            <li><strong>Plaza Tauro</strong> — activar solicitud de reseñas desde ya, para construir historial propio.</li>
+          </ol>
+        </div>
       </div>
     </div>
   </section>
@@ -758,21 +864,22 @@
       <div class="idx">06 / 08 · SIGUIENTE</div>
     </div>
     <div class="slide-inner">
-      <div class="eyebrow-sm reveal">Próximo trimestre</div>
+      <div class="eyebrow-sm reveal">Siguiente fase</div>
       <h2 class="reveal" style="--d:60ms">Lo que<span class="accent">sigue</span></h2>
+      <p class="lede reveal" style="--d:100ms">Un cambio real en reputación y presencia digital no se logra en un mes de arranque: recomendamos planear esta fase con un horizonte mínimo de <strong>ocho meses</strong> de trabajo continuo.</p>
       <div class="strategy-intro reveal" style="--d:120ms">
-        <div class="intro-copy"><span class="strategy-label">Estrategia trimestral</span><p>Más personas cerca de BIOS. Más confianza en cada sucursal.</p></div>
+        <div class="intro-copy"><span class="strategy-label">Estrategia de fase · mínimo 8 meses</span><p>Más personas cerca de BIOS. Más confianza en cada sucursal.</p></div>
         <div class="pillars"><div class="pillar"><i></i>Alcance de marca</div><div class="pillar"><i></i>Interacción con la audiencia</div><div class="pillar"><i></i>Reputación y reseñas</div></div>
       </div>
 
       <div class="strategy-block reveal" style="--d:160ms">
-        <h3><span>Dirección</span>Objetivo general del trimestre</h3>
+        <h3><span>Dirección</span>Objetivo general de la fase</h3>
         <p>Lograr que BIOS tenga una presencia digital más sólida, cercana y confiable en las zonas donde opera, conectando sus redes sociales, sitio web, sucursales y perfiles de Google dentro de una misma estrategia.</p>
         <ul class="strategy-list"><li>Incrementar el número de personas que conocen BIOS en las zonas cercanas a sus sucursales.</li><li>Generar más visitas al sitio web, perfiles sociales y ubicaciones de Google.</li><li>Aumentar las interacciones con publicaciones, servicios y contenido informativo.</li><li>Conseguir nuevas reseñas auténticas de pacientes satisfechos.</li><li>Mejorar progresivamente la calificación y percepción pública de las sucursales.</li><li>Detectar y atender comentarios negativos o áreas recurrentes de oportunidad.</li><li>Construir una comunicación más humana, constante y reconocible.</li></ul>
       </div>
 
       <div class="strategy-block reveal" style="--d:200ms">
-        <h3><span>Mes 1</span>Reputación, diagnóstico y preparación</h3>
+        <h3><span>Fase 1</span>Reputación, diagnóstico y preparación</h3>
         <p>Organizar la presencia digital de cada sucursal, detectar los principales problemas de reputación y establecer un sistema permanente para solicitar, responder y dar seguimiento a las reseñas.</p>
         <div class="strategy-grid">
           <article class="strategy-item"><h4>01 · Auditoría de reputación digital</h4><p>Revisión de cada perfil de BIOS en Google para identificar calificación, reseñas, frecuencia, comentarios positivos, quejas recurrentes, reseñas sin respuesta, información incorrecta, fotografías y datos por corregir.</p></article>
@@ -780,32 +887,32 @@
           <article class="strategy-item"><h4>03 · Sistema de solicitud de reseñas</h4><p>Código QR por sucursal, enlace directo a Google Maps, material para recepción y salas de espera, mensaje digital para WhatsApp, texto para el personal y recordatorio posterior. Siempre dirigido a pacientes reales.</p></article>
           <article class="strategy-item"><h4>04 · Protocolo de respuesta</h4><p>Guía para reseñas positivas, neutrales, quejas, dudas, instalaciones y casos que requieran seguimiento privado. Respuestas humanas, respetuosas y personalizadas.</p></article>
           <article class="strategy-item"><h4>05 · Capacitación y comunicación interna</h4><p>Guía breve para explicar cuándo solicitar una reseña, cómo compartir el QR, qué lenguaje utilizar, qué evitar y cómo escalar una inconformidad delicada.</p></article>
-          <article class="strategy-item featured"><h4>Entregables del mes</h4><ul><li>Auditoría y reporte por sucursal.</li><li>Perfiles de Google optimizados.</li><li>Código QR individual y material gráfico.</li><li>Mensajes para WhatsApp y recepción.</li><li>Manual de respuestas y tablero de seguimiento.</li></ul></article>
+          <article class="strategy-item featured"><h4>Entregables de la fase</h4><ul><li>Auditoría y reporte por sucursal.</li><li>Perfiles de Google optimizados.</li><li>Código QR individual y material gráfico.</li><li>Mensajes para WhatsApp y recepción.</li><li>Manual de respuestas y tablero de seguimiento.</li></ul></article>
         </div>
       </div>
 
       <div class="strategy-block reveal" style="--d:240ms">
-        <h3><span>Mes 2</span>Alcance local y reconocimiento de marca</h3>
+        <h3><span>Fase 2</span>Alcance local y reconocimiento de marca</h3>
         <p>Aumentar la cantidad de personas que descubren BIOS dentro de las zonas cercanas a cada sucursal y posicionar la marca como una opción confiable, accesible y profesional.</p>
         <div class="strategy-grid">
           <article class="strategy-item"><h4>01 · Contenido geolocalizado</h4><p>Publicaciones sobre ubicación, horarios, servicios, cómo llegar, instalaciones, equipo, preparación, preguntas frecuentes, estudios de laboratorio, prevención y fechas relevantes de salud.</p></article>
           <article class="strategy-item"><h4>02 · Campañas de alcance por sucursal</h4><p>Campañas dirigidas a personas que viven, trabajan o transitan cerca, con llamados a Google Maps, sitio web, WhatsApp, servicios, sucursal o formulario de contacto.</p></article>
           <article class="strategy-item"><h4>03 · Optimización para búsquedas locales</h4><p>Secciones por ubicación, dirección, teléfono, horario, mapa, servicios, botones de Google Maps, títulos, descripciones, preguntas frecuentes y navegación móvil.</p></article>
           <article class="strategy-item"><h4>04 · Contenido de confianza</h4><p>Presentación del equipo, procesos, recorridos, explicación de estudios, preparación, mitos, testimonios autorizados, innovación, calidad, higiene y seguridad.</p></article>
-          <article class="strategy-item featured"><h4>Entregables del mes</h4><ul><li>Calendario mensual y diseños para publicaciones.</li><li>Contenido diferenciado por sucursal.</li><li>Campañas segmentadas por ubicación.</li><li>Páginas locales dentro del sitio.</li><li>Reporte de alcance, clics y visitas.</li><li>Recomendaciones de optimización.</li></ul></article>
+          <article class="strategy-item featured"><h4>Entregables de la fase</h4><ul><li>Calendario mensual y diseños para publicaciones.</li><li>Contenido diferenciado por sucursal.</li><li>Campañas segmentadas por ubicación.</li><li>Páginas locales dentro del sitio.</li><li>Reporte de alcance, clics y visitas.</li><li>Recomendaciones de optimización.</li></ul></article>
         </div>
       </div>
 
       <div class="strategy-block reveal" style="--d:280ms">
-        <h3><span>Mes 3</span>Interacción, conversión y optimización</h3>
+        <h3><span>Fase 3</span>Interacción, conversión y optimización</h3>
         <p>Convertir el alcance generado en conversaciones, visitas al sitio, solicitudes de información, indicaciones para llegar a una sucursal y nuevas reseñas.</p>
         <div class="strategy-grid">
           <article class="strategy-item"><h4>01 · Contenido para participar</h4><p>Preguntas frecuentes, encuestas, verdadero o falso, mitos, cuestionarios, consejos, publicaciones guardables, historias con preguntas y explicaciones sencillas.</p></article>
           <article class="strategy-item"><h4>02 · Rutas claras de atención</h4><p>Cada contenido dirigirá a consultar un servicio, escribir por WhatsApp, visitar el sitio, abrir Google Maps, conocer una sucursal, revisar requisitos, solicitar información o dejar una reseña.</p></article>
           <article class="strategy-item"><h4>03 · Seguimiento de comentarios y mensajes</h4><p>Clasificación de solicitudes, precios, horarios, preparación, quejas, comentarios positivos, ubicaciones, posibles pacientes y temas que requieran atención interna.</p></article>
           <article class="strategy-item"><h4>04 · Segunda campaña de reputación</h4><p>Refuerzo en sucursales con menor crecimiento, revisando materiales, horarios, comentarios repetidos, puntos del servicio y necesidades de apoyo.</p></article>
-          <article class="strategy-item"><h4>05 · Análisis y optimización trimestral</h4><p>Reporte comparativo con calificaciones, reseñas, respuestas, alcance, interacciones, visitas, clics, mejores contenidos, crecimiento, comentarios y recomendaciones.</p></article>
-          <article class="strategy-item featured"><h4>Entregables del mes</h4><ul><li>Calendario interactivo y piezas gráficas.</li><li>Dinámicas para historias y redes.</li><li>Seguimiento de interacciones.</li><li>Refuerzo de campaña de reseñas.</li><li>Optimización de campañas.</li><li>Reporte trimestral y propuesta siguiente.</li></ul></article>
+          <article class="strategy-item"><h4>05 · Análisis y optimización de fase</h4><p>Reporte comparativo con calificaciones, reseñas, respuestas, alcance, interacciones, visitas, clics, mejores contenidos, crecimiento, comentarios y recomendaciones.</p></article>
+          <article class="strategy-item featured"><h4>Entregables de la fase</h4><ul><li>Calendario interactivo y piezas gráficas.</li><li>Dinámicas para historias y redes.</li><li>Seguimiento de interacciones.</li><li>Refuerzo de campaña de reseñas.</li><li>Optimización de campañas.</li><li>Reporte de fase y propuesta siguiente.</li></ul></article>
         </div>
       </div>
 
@@ -824,7 +931,7 @@
       <div class="strategy-block reveal" style="--d:400ms">
         <h3><span>Colaboración</span>Participación necesaria de BIOS</h3>
         <ul class="strategy-list"><li>Comunicar promociones o campañas con anticipación.</li><li>Implementar la solicitud de reseñas en recepción.</li><li>Reportar inconformidades que necesiten seguimiento.</li><li>Dar respuesta interna a temas médicos, administrativos o sensibles.</li><li>Informar cambios de horario o servicio.</li><li>Participar en contenido humano y audiovisual.</li></ul>
-        <div class="insight">Al terminar el trimestre, BIOS contará con una estrategia de reputación más ordenada, perfiles de Google optimizados, mayor presencia local y un sistema activo para transformar la experiencia diaria de los pacientes en confianza digital.</div>
+        <div class="insight">Al terminar esta fase, BIOS contará con una estrategia de reputación más ordenada, perfiles de Google optimizados, mayor presencia local y un sistema activo para transformar la experiencia diaria de los pacientes en confianza digital.</div>
       </div>
     </div>
   </section>
@@ -859,7 +966,7 @@
           <div class="campaign-col-head"><i class="leg-venta"></i> Venta directa <span class="tag">3 campañas</span></div>
 
           <div class="campaign-card">
-            <div class="month">Mes 1</div>
+            <div class="month">Fase 1</div>
             <h4>Reactivación de cotizaciones</h4>
             <p>Impulsa a quienes ya cotizaron un estudio a agendar su cita, con recordatorio directo y oferta de vigencia limitada.</p>
             <div class="channel">WHATSAPP · FACEBOOK ADS</div>
@@ -867,7 +974,7 @@
           </div>
 
           <div class="campaign-card">
-            <div class="month">Mes 2</div>
+            <div class="month">Fase 2</div>
             <h4>Paquetes de estudios preventivos</h4>
             <p>Promoción por sucursal de paquetes de laboratorio con precio especial, dirigida a quienes ya interactuaron con BIOS.</p>
             <div class="channel">META ADS · SITIO WEB</div>
@@ -875,8 +982,8 @@
           </div>
 
           <div class="campaign-card">
-            <div class="month">Mes 3</div>
-            <h4>Cierre de trimestre</h4>
+            <div class="month">Fase 3</div>
+            <h4>Cierre de fase</h4>
             <p>Convierte el alcance acumulado de los dos meses previos en citas agendadas, con landing y cotizador conectado.</p>
             <div class="channel">ADS · LANDING + COTIZADOR</div>
             <span class="chip pending">○ Por aprobar</span>
@@ -887,7 +994,7 @@
           <div class="campaign-col-head"><i class="leg-contacto"></i> Contacto <span class="tag">3 campañas</span></div>
 
           <div class="campaign-card">
-            <div class="month">Mes 1</div>
+            <div class="month">Fase 1</div>
             <h4>Activación de WhatsApp</h4>
             <p>Invita a la audiencia a resolver dudas antes de su estudio directamente por WhatsApp, con botón fijo en cada publicación.</p>
             <div class="channel">WHATSAPP BUSINESS · REDES</div>
@@ -895,7 +1002,7 @@
           </div>
 
           <div class="campaign-card">
-            <div class="month">Mes 2</div>
+            <div class="month">Fase 2</div>
             <h4>Preguntas frecuentes en vivo</h4>
             <p>Genera conversación directa resolviendo dudas comunes sobre estudios, preparación y tiempos de entrega.</p>
             <div class="channel">INSTAGRAM · FACEBOOK</div>
@@ -903,7 +1010,7 @@
           </div>
 
           <div class="campaign-card">
-            <div class="month">Mes 3</div>
+            <div class="month">Fase 3</div>
             <h4>Agenda rápida</h4>
             <p>Formulario corto de contacto para pedir información o agendar cita con un solo paso, sin salir de la conversación.</p>
             <div class="channel">SITIO WEB · META ADS</div>
@@ -915,7 +1022,7 @@
           <div class="campaign-col-head"><i class="leg-reconocimiento"></i> Reconocimiento <span class="tag">3 campañas</span></div>
 
           <div class="campaign-card">
-            <div class="month">Mes 1</div>
+            <div class="month">Fase 1</div>
             <h4>Presentación de identidad renovada</h4>
             <p>Da a conocer el nuevo logotipo y la imagen actualizada de BIOS en redes y en cada sucursal.</p>
             <div class="channel">REDES · SUCURSALES</div>
@@ -923,7 +1030,7 @@
           </div>
 
           <div class="campaign-card">
-            <div class="month">Mes 2</div>
+            <div class="month">Fase 2</div>
             <h4>Historias de sucursal</h4>
             <p>Contenido con equipo, instalaciones y proceso de atención para generar cercanía con la comunidad local.</p>
             <div class="channel">INSTAGRAM · FACEBOOK</div>
@@ -931,7 +1038,7 @@
           </div>
 
           <div class="campaign-card">
-            <div class="month">Mes 3</div>
+            <div class="month">Fase 3</div>
             <h4>Temporada de salud</h4>
             <p>Campaña de alcance ligada a una fecha relevante de salud pública, para reforzar presencia de marca en la zona.</p>
             <div class="channel">ADS · CONTENIDO</div>
