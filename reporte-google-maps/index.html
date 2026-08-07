@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Reseñas de Google Maps · BIOS × Partum Design</title>
+<meta name="description" content="Reporte de métricas de reseñas de Google Maps de Laboratorios BIOS: calificación por sucursal, promedio general y desglose de temas mencionados por los pacientes. Corte 6 ago 2026." />
+<link rel="icon" href="assets/favicon.png" />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#070c16;
+    --panel:#0d1626;
+    --panel-2:#111d33;
+    --electric:#3e63ff;
+    --electric-deep:#1e3fd4;
+    --cyan:#2bd9ea;
+    --paper:#eef3f9;
+    --card:#ffffff;
+    --ink:#f4f7fc;
+    --ink-dim:#9daec9;
+    --ink-faint:#5f7092;
+    --dark-ink:#0a1526;
+    --dark-ink-dim:#4d6076;
+    --line:rgba(255,255,255,.10);
+    --line-strong:rgba(255,255,255,.20);
+    --line-light:#d4dfeb;
+    --good:#34c98d;
+    --warn:#f2b544;
+    --critical:#ef5a6f;
+    --r:6px;
+    --pad: clamp(24px, 6vw, 88px);
+  }
+
+  *{ box-sizing:border-box; }
+  html{ scroll-behavior:smooth; }
+
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font-family:'Inter', system-ui, sans-serif;
+    -webkit-font-smoothing:antialiased;
+    line-height:1.5;
+    overflow-x:hidden;
+  }
+
+  h1,h2,h3,h4{ font-family:'Space Grotesk','Inter',sans-serif; margin:0; }
+  .mono{ font-family:'IBM Plex Mono', ui-monospace, monospace; }
+  a{ color:inherit; }
+  img{ max-width:100%; display:block; }
+  ::selection{ background:rgba(62,99,255,.4); }
+  :focus-visible{ outline:2px solid var(--cyan); outline-offset:3px; }
+
+  /* ================= deck ================= */
+  .deck{
+    height:100svh; height:100vh;
+    overflow-y:auto; overflow-x:hidden;
+    scroll-snap-type: y proximity;
+  }
+  .slide{
+    min-height:100svh; min-height:100vh;
+    position:relative;
+    display:flex; flex-direction:column; justify-content:center;
+    padding: clamp(110px,12vh,150px) var(--pad) clamp(70px,9vh,120px);
+    scroll-snap-align:start;
+    overflow:hidden;
+  }
+  .slide-inner{ position:relative; z-index:2; width:100%; max-width:1240px; margin:0 auto; }
+
+  .slide.dark{ background:var(--bg); }
+  .slide.dark::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:
+      radial-gradient(ellipse 780px 560px at 8% -6%, rgba(62,99,255,.22), transparent 62%),
+      radial-gradient(ellipse 620px 480px at 102% 104%, rgba(43,217,234,.09), transparent 60%);
+  }
+
+  .slide.light{ background:var(--paper); color:var(--dark-ink); }
+  .slide.light::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 700px 420px at 100% 0%, rgba(62,99,255,.07), transparent 65%);
+  }
+
+  /* ================= ghost number ================= */
+  .ghost-num{
+    position:absolute; z-index:1; top:50%; right:clamp(-60px,-3vw,16px);
+    transform:translateY(-50%);
+    font-family:'Space Grotesk',sans-serif; font-weight:700;
+    font-size:clamp(220px, 32vw, 540px);
+    line-height:1; letter-spacing:-.05em;
+    background:linear-gradient(165deg, rgba(62,99,255,.42), rgba(62,99,255,.02) 78%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+    pointer-events:none; user-select:none;
+  }
+  .slide.light .ghost-num{
+    background:linear-gradient(165deg, rgba(62,99,255,.16), rgba(62,99,255,.01) 78%);
+    -webkit-background-clip:text; background-clip:text;
+  }
+
+  /* ================= topbar ================= */
+  .topbar{
+    position:absolute; top:0; left:0; right:0; z-index:3;
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    padding: 22px var(--pad);
+    border-bottom:1px solid var(--line);
+  }
+  .slide.light .topbar{ border-bottom-color:var(--line-light); }
+  .topbar .brand{ display:flex; align-items:center; gap:13px; }
+  .topbar .brand img{ height:30px; width:auto; }
+  .topbar .brand img.partum{ height:23px; }
+  .topbar .brand .x{ font-family:'IBM Plex Mono',monospace; font-size:14px; color:var(--cyan); }
+  .slide.light .topbar .brand img{ filter:brightness(0) saturate(100%); opacity:.88; }
+  .slide.light .topbar .brand .x{ color:var(--electric); }
+  .topbar .idx{ font-family:'IBM Plex Mono',monospace; font-size:11.5px; color:var(--ink-faint); letter-spacing:.12em; }
+  .slide.light .topbar .idx{ color:var(--dark-ink-dim); }
+
+  /* ================= reveal ================= */
+  .reveal{ opacity:0; transform:translateY(24px); transition:opacity .7s cubic-bezier(.2,.7,.2,1), transform .7s cubic-bezier(.2,.7,.2,1); transition-delay: var(--d, 0ms); }
+  .reveal.in{ opacity:1; transform:translateY(0); }
+  @media (prefers-reduced-motion:reduce){
+    .reveal{ transition:none; opacity:1; transform:none; }
+    html{ scroll-behavior:auto; }
+  }
+
+  /* ================= dot nav ================= */
+  .dotnav{
+    position:fixed; right:22px; top:50%; transform:translateY(-50%); z-index:40;
+    display:flex; flex-direction:column; gap:14px; align-items:flex-end;
+    mix-blend-mode:difference;
+  }
+  .dotnav button{ all:unset; cursor:pointer; display:flex; align-items:center; gap:10px; justify-content:flex-end; }
+  .dotnav .dot{ width:7px; height:7px; border-radius:50%; background:#8a8a8a; transition:all .25s ease; }
+  .dotnav .lbl{
+    font-family:'IBM Plex Mono',monospace; font-size:10.5px; color:#bbb;
+    opacity:0; transform:translateX(6px); transition:all .2s ease; white-space:nowrap;
+  }
+  .dotnav button:hover .lbl{ opacity:1; transform:translateX(0); }
+  .dotnav button.active .dot{ background:#fff; width:9px; height:9px; }
+  .dotnav button.active .lbl{ opacity:1; transform:translateX(0); color:#fff; }
+  @media (max-width:760px){ .dotnav{ display:none; } }
+
+  .scrollcue{
+    position:absolute; bottom:26px; left:0; right:0; text-align:center; z-index:2;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; color:var(--ink-faint);
+    display:flex; flex-direction:column; align-items:center; gap:8px;
+  }
+  .scrollcue .chev{ animation:bob 1.8s ease-in-out infinite; }
+  @keyframes bob{ 0%,100%{transform:translateY(0);} 50%{transform:translateY(6px);} }
+  @media (prefers-reduced-motion:reduce){ .scrollcue .chev{ animation:none; } }
+
+  /* ================= headings ================= */
+  .eyebrow-sm{
+    display:inline-flex; align-items:center; gap:9px;
+    font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.14em;
+    text-transform:uppercase; color:var(--cyan);
+    padding:8px 14px; border:1px solid rgba(43,217,234,.3); background:rgba(43,217,234,.06);
+    border-radius:999px; margin-bottom:22px;
+  }
+  .eyebrow-sm::before{ content:""; width:6px; height:6px; border-radius:50%; background:var(--cyan); }
+  .slide.light .eyebrow-sm{ color:var(--electric-deep); border-color:rgba(30,63,212,.28); background:rgba(62,99,255,.06); }
+  .slide.light .eyebrow-sm::before{ background:var(--electric); }
+
+  .slide h2{
+    font-size:clamp(40px, 6.4vw, 82px); font-weight:600; line-height:.98; letter-spacing:-.045em;
+  }
+  .slide h2 .accent{
+    display:block;
+    background:linear-gradient(95deg, var(--electric) 10%, var(--cyan) 90%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .slide.light h2 .accent{
+    background:linear-gradient(95deg, var(--electric-deep), #0d9db4);
+    -webkit-background-clip:text; background-clip:text;
+  }
+  .slide .lede{ margin-top:22px; font-size:clamp(15px,1.6vw,17px); color:var(--ink-dim); max-width:58ch; line-height:1.7; }
+  .slide.light .lede{ color:var(--dark-ink-dim); }
+
+  /* ================= cover ================= */
+  .cover{ padding-top:clamp(90px,11vh,140px); }
+  .cover .eyebrow{
+    display:inline-flex; align-items:center; gap:8px;
+    font-family:'IBM Plex Mono',monospace; font-size:12px; letter-spacing:.12em;
+    color:var(--cyan); text-transform:uppercase;
+    border:1px solid rgba(43,217,234,.32); background:rgba(43,217,234,.07);
+    padding:8px 16px; border-radius:999px; margin-bottom:34px;
+  }
+  .cover h1{
+    font-size:clamp(52px, 9.6vw, 126px); font-weight:600; line-height:.96; letter-spacing:-.055em;
+    max-width:11ch;
+  }
+  .cover h1 .accent{
+    background:linear-gradient(95deg, var(--electric) 5%, var(--cyan) 95%);
+    -webkit-background-clip:text; background-clip:text; color:transparent;
+  }
+  .cover .sub{ margin-top:28px; font-size:clamp(16px,1.7vw,20px); color:var(--ink-dim); max-width:52ch; line-height:1.7; }
+  .cover .daterange{
+    margin-top:30px; display:inline-flex; align-items:center; gap:12px;
+    font-family:'IBM Plex Mono',monospace; font-size:13px; color:var(--ink-dim);
+    border:1px solid var(--line-strong); border-radius:999px; padding:9px 18px;
+  }
+  .daterange .dot{ width:6px;height:6px;border-radius:50%;background:var(--good); box-shadow:0 0 0 4px rgba(52,201,141,.16); }
+
+  .lockup-big{
+    margin-top:48px; display:inline-flex; align-items:center; gap:clamp(20px,3vw,38px); flex-wrap:wrap;
+    padding:clamp(24px,3vw,36px) clamp(28px,4vw,48px);
+    border:1px solid var(--line-strong); border-radius:var(--r);
+    background:linear-gradient(120deg, rgba(62,99,255,.16), rgba(43,217,234,.05));
+  }
+  .lockup-big img.bios{ height:clamp(52px,8vw,96px); width:auto; }
+  .lockup-big img.partum{ height:clamp(38px,5.6vw,70px); width:auto; }
+  .lockup-big .x{ font-size:clamp(20px,2.4vw,28px); color:var(--cyan); font-family:'IBM Plex Mono',monospace; }
+  .lockup-big.animate img{ opacity:0; transform:scale(.92); animation:pop .8s cubic-bezier(.2,.7,.2,1) forwards; }
+  .lockup-big.animate img.bios{ animation-delay:.15s; }
+  .lockup-big.animate img.partum{ animation-delay:.4s; }
+  .lockup-big.animate .x{ opacity:0; animation:fadein .6s ease forwards .35s; }
+  @keyframes pop{ to{ opacity:1; transform:scale(1); } }
+  @keyframes fadein{ to{ opacity:1; } }
+  @media (prefers-reduced-motion:reduce){ .lockup-big.animate img, .lockup-big.animate .x{ animation:none; opacity:1; transform:none; } }
+
+  /* ================= reseñas por sucursal (light) ================= */
+  .rev-grid{ display:grid; grid-template-columns:repeat(auto-fill,minmax(250px,1fr)); gap:14px; margin-top:42px; }
+  .rev{
+    background:var(--card); border:1px solid var(--line-light); border-radius:var(--r);
+    padding:22px 20px 20px;
+    transition:transform .25s ease, border-color .25s ease;
+  }
+  .rev:hover{ transform:translateY(-4px); border-color:var(--electric); }
+  .rev .loc{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:15px; color:var(--dark-ink); letter-spacing:-.01em; }
+  .rev .place{ font-size:12px; color:var(--dark-ink-dim); margin-top:4px; }
+  .rev .rating-row{ margin-top:18px; display:flex; align-items:baseline; gap:10px; }
+  .rev .num{ font-family:'Space Grotesk',sans-serif; font-size:32px; font-weight:600; letter-spacing:-.04em; color:var(--dark-ink); }
+  .rev .count{ font-size:12px; color:var(--dark-ink-dim); }
+  .stars{ position:relative; display:inline-block; font-size:15px; line-height:1; margin-top:10px; letter-spacing:2px; }
+  .stars .bg{ color:#d8e0ea; }
+  .stars .fg{ position:absolute; inset:0; overflow:hidden; color:#eda72f; white-space:nowrap; }
+  .rev .note{ margin-top:12px; font-size:11.5px; color:var(--dark-ink-dim); font-style:italic; line-height:1.5; }
+
+  .verdict{
+    margin-top:26px; display:grid; grid-template-columns:minmax(220px,.34fr) 1fr;
+    border-radius:var(--r); overflow:hidden;
+    background:linear-gradient(120deg, var(--electric), #2fb9d8);
+  }
+  .verdict .score{
+    padding:clamp(22px,3vw,34px); display:flex; flex-direction:column; justify-content:center; gap:8px;
+    border-right:1px solid rgba(6,16,36,.18);
+  }
+  .verdict .score .big{ font-family:'Space Grotesk',sans-serif; font-size:clamp(48px,6vw,76px); font-weight:600; letter-spacing:-.05em; line-height:1; color:#061024; }
+  .verdict .score .cap{ font-family:'IBM Plex Mono',monospace; font-size:11px; letter-spacing:.1em; text-transform:uppercase; color:rgba(6,16,36,.65); }
+  .verdict .txt{ padding:clamp(22px,3vw,34px); display:flex; align-items:center; font-size:clamp(15px,1.7vw,18px); line-height:1.6; color:#061024; font-weight:500; }
+  @media (max-width:640px){ .verdict{ grid-template-columns:1fr; } .verdict .score{ border-right:0; border-bottom:1px solid rgba(6,16,36,.18); } }
+
+  /* ================= desglose por tema (light) ================= */
+  .topic-panel{ margin-top:8px; }
+  .topic-note{ margin-top:14px; font-size:13px; color:var(--dark-ink-dim); max-width:70ch; line-height:1.65; }
+  .topic-grid{ display:grid; grid-template-columns:repeat(auto-fit,minmax(300px,1fr)); gap:16px; margin-top:28px; }
+  .topic-card{
+    background:var(--card); border:1px solid var(--line-light); border-radius:var(--r);
+    padding:22px 20px 20px;
+  }
+  .topic-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-bottom:18px; }
+  .topic-loc{ font-family:'Space Grotesk',sans-serif; font-weight:600; font-size:14.5px; color:var(--dark-ink); letter-spacing:-.01em; }
+  .topic-loc small{ display:block; font-family:'Inter',sans-serif; font-weight:400; font-size:11px; color:var(--dark-ink-dim); margin-top:3px; }
+  .topic-pr{ font-family:'IBM Plex Mono',monospace; font-size:10px; letter-spacing:.06em; text-transform:uppercase; padding:5px 10px; border-radius:999px; white-space:nowrap; }
+  .topic-pr.critica{ color:var(--critical); background:rgba(239,90,111,.1); border:1px solid rgba(239,90,111,.28); }
+  .topic-pr.alta{ color:#c07a12; background:rgba(242,181,68,.14); border:1px solid rgba(242,181,68,.35); }
+  .topic-pr.media{ color:var(--electric-deep); background:rgba(62,99,255,.1); border:1px solid rgba(62,99,255,.24); }
+  .t-row{ margin-bottom:12px; }
+  .t-row:last-child{ margin-bottom:0; }
+  .t-top{ display:flex; justify-content:space-between; gap:10px; font-size:12px; margin-bottom:6px; }
+  .t-top .t-lbl{ color:var(--dark-ink); }
+  .t-top .t-val{ font-family:'IBM Plex Mono',monospace; color:var(--dark-ink-dim); font-size:11px; flex:0 0 auto; }
+  .t-track{ height:7px; border-radius:4px; background:#e3e9f1; overflow:hidden; }
+  .t-fill{ height:100%; border-radius:4px; background:linear-gradient(90deg,var(--electric-deep),var(--electric)); }
+  .topic-foot{ margin-top:16px; padding-top:14px; border-top:1px solid var(--line-light); font-size:11.5px; color:var(--dark-ink-dim); line-height:1.6; }
+  .topic-foot strong{ color:var(--dark-ink); }
+  .topic-summary{
+    margin-top:26px; padding:22px 24px; border-radius:var(--r);
+    background:#fff; border:1px solid var(--line-light); border-left:3px solid var(--electric);
+    font-size:13.5px; color:var(--dark-ink-dim); line-height:1.7;
+  }
+  .topic-summary strong{ color:var(--dark-ink); }
+  .topic-summary ol{ margin:10px 0 0; padding-left:18px; }
+  .topic-summary li{ margin-bottom:4px; }
+
+  /* ================= cierre ================= */
+  .closing{ align-items:center; text-align:center; background:linear-gradient(150deg,#081227,#0d1d42); }
+  .closing::before{
+    content:""; position:absolute; inset:0; pointer-events:none;
+    background:radial-gradient(ellipse 700px 460px at 50% 110%, rgba(62,99,255,.28), transparent 65%);
+  }
+  .closing .slide-inner{ display:flex; flex-direction:column; align-items:center; }
+  .closing .lockup-big{ margin-top:0; }
+  .closing .lockup-big img.bios{ height:clamp(64px,10vw,116px); }
+  .closing .lockup-big img.partum{ height:clamp(46px,7vw,86px); }
+  .closing h2{ margin-top:44px; font-size:clamp(32px,5.4vw,64px); letter-spacing:-.045em; }
+  .closing .closing-note{ text-align:center; max-width:46ch; }
+  .closing .back{ margin-top:38px; }
+  .closing .back button{
+    all:unset; cursor:pointer; font-family:'IBM Plex Mono',monospace; font-size:12.5px; color:var(--ink-dim);
+    border:1px solid var(--line-strong); padding:11px 22px; border-radius:999px; transition:all .2s ease;
+  }
+  .closing .back button:hover{ color:var(--ink); border-color:var(--cyan); background:rgba(43,217,234,.07); }
+
+  @media (prefers-reduced-motion:reduce){
+    .rev:hover{ transform:none; }
+  }
+  @media (max-width:760px){
+    .topbar .brand img{ height:24px; }
+    .topbar .brand img.partum{ height:19px; }
+    .slide h2{ font-size:clamp(38px,11vw,64px); }
+  }
+</style>
+</head>
+<body>
+
+<nav class="dotnav" id="dotnav" aria-label="Navegación del reporte">
+  <button data-target="s0"><span class="lbl">Portada</span><span class="dot"></span></button>
+  <button data-target="s1"><span class="lbl">Calificaciones</span><span class="dot"></span></button>
+  <button data-target="s2"><span class="lbl">Temas</span><span class="dot"></span></button>
+  <button data-target="s3"><span class="lbl">Cierre</span><span class="dot"></span></button>
+</nav>
+
+<div class="deck" id="deck">
+
+  <!-- ============ COVER ============ -->
+  <section class="slide dark cover" id="s0">
+    <div class="slide-inner">
+      <span class="eyebrow reveal">Partum Design × Laboratorios BIOS</span>
+      <h1 class="reveal" style="--d:80ms">Reseñas de<br><span class="accent">Google Maps</span></h1>
+      <p class="sub reveal" style="--d:160ms">Métricas de reputación digital <span class="mono" style="color:var(--cyan); font-size:.7em;">(fichas de Google Business Profile)</span>: calificación ficha por ficha, promedio general y lectura de los temas que mencionan los pacientes en sus reseñas.</p>
+      <div class="daterange reveal" style="--d:220ms"><span class="dot"></span> CORTE 06 AGO 2026 · 6 FICHAS · 289 RESEÑAS</div>
+
+      <div class="lockup-big animate reveal" style="--d:280ms">
+        <img class="bios" src="assets/bios-logo-white.png" alt="Laboratorios BIOS" />
+        <span class="x">×</span>
+        <img class="partum" src="assets/partum-logo-white.png" alt="Partum Design" />
+      </div>
+    </div>
+    <div class="scrollcue"><span>Desliza para ver las métricas</span><span class="chev">↓</span></div>
+  </section>
+
+  <!-- ============ 01 CALIFICACIONES ============ -->
+  <section class="slide light" id="s1">
+    <div class="ghost-num">01</div>
+    <div class="topbar">
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">01 / 03 · CALIFICACIONES</div>
+    </div>
+    <div class="slide-inner">
+      <div class="eyebrow-sm reveal">Métricas de Google Maps</div>
+      <h2 class="reveal" style="--d:60ms">Reputación<span class="accent">sucursal por sucursal</span></h2>
+      <p class="lede reveal" style="--d:120ms">Así nos ve hoy la gente en Google, ficha por ficha: calificación promedio y volumen de reseñas de cada ubicación.</p>
+
+      <div class="rev-grid">
+        <div class="rev reveal" style="--d:150ms">
+          <div class="loc">Laboratorio Bios — Sucursal Cantú</div>
+          <div class="place">Plaza Cantú, Cuautitlán Izcalli</div>
+          <div class="rating-row"><span class="num">2.8</span><span class="count">146 reseñas</span></div>
+          <div class="stars"><span class="bg">★★★★★</span><span class="fg" style="width:56%">★★★★★</span></div>
+        </div>
+        <div class="rev reveal" style="--d:190ms">
+          <div class="loc">Laboratorio Médico Diagnóstico BIOS</div>
+          <div class="place">Soriana Paseo la Joya, Cuautitlán</div>
+          <div class="rating-row"><span class="num">3.0</span><span class="count">62 reseñas</span></div>
+          <div class="stars"><span class="bg">★★★★★</span><span class="fg" style="width:60%">★★★★★</span></div>
+        </div>
+        <div class="rev reveal" style="--d:230ms">
+          <div class="loc">Laboratorio BIOS</div>
+          <div class="place">Súper Plaza Las Haciendas, Cuautitlán Izcalli</div>
+          <div class="rating-row"><span class="num">2.8</span><span class="count">47 reseñas</span></div>
+          <div class="stars"><span class="bg">★★★★★</span><span class="fg" style="width:56%">★★★★★</span></div>
+        </div>
+        <div class="rev reveal" style="--d:270ms">
+          <div class="loc">BIOS laboratorios</div>
+          <div class="place">Soriana Mercado Tepalcapa, Cuautitlán Izcalli</div>
+          <div class="rating-row"><span class="num">2.5</span><span class="count">19 reseñas</span></div>
+          <div class="stars"><span class="bg">★★★★★</span><span class="fg" style="width:50%">★★★★★</span></div>
+        </div>
+        <div class="rev reveal" style="--d:310ms">
+          <div class="loc">Laboratorio Médico Diagnóstico BIOS</div>
+          <div class="place">Ejido San Francisco Tepojaco, Cuautitlán Izcalli</div>
+          <div class="rating-row"><span class="num">3.5</span><span class="count">14 reseñas</span></div>
+          <div class="stars"><span class="bg">★★★★★</span><span class="fg" style="width:70%">★★★★★</span></div>
+        </div>
+        <div class="rev reveal" style="--d:350ms">
+          <div class="loc">Plaza Tauro</div>
+          <div class="place">San Martín, Tultepec</div>
+          <div class="rating-row"><span class="num">5.0</span><span class="count">1 reseña</span></div>
+          <div class="stars"><span class="bg">★★★★★</span><span class="fg" style="width:100%">★★★★★</span></div>
+          <div class="note">Es la ficha de la plaza, no de una sucursal BIOS — todavía sin historial relevante.</div>
+        </div>
+      </div>
+
+      <div class="verdict reveal" style="--d:400ms">
+        <div class="score"><div class="big">2.9★</div><div class="cap">288 reseñas · 5 sucursales</div></div>
+        <div class="txt">Hay margen real de mejora, y ese es justamente el punto de partida: convertir la experiencia diaria de los pacientes en reputación digital.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ 02 TEMAS ============ -->
+  <section class="slide light" id="s2">
+    <div class="ghost-num">02</div>
+    <div class="topbar">
+      <div class="brand"><img src="assets/bios-logo-white.png" alt="BIOS"><span class="x">×</span><img class="partum" src="assets/partum-logo-white.png" alt="Partum"></div>
+      <div class="idx">02 / 03 · TEMAS</div>
+    </div>
+    <div class="slide-inner">
+      <div class="eyebrow-sm reveal">Lectura por sucursal · corte 6 ago 2026</div>
+      <h2 class="reveal" style="--d:60ms">¿De qué se queja<span class="accent">la gente?</span></h2>
+
+      <div class="topic-panel">
+        <p class="topic-note reveal" style="--d:110ms">Lectura del contenido de las reseñas de Google de cada sucursal, agrupado por tema. Una misma reseña puede tocar varios temas a la vez, así que los porcentajes son aproximados y no suman 100%. Plaza Tauro no se incluye: solo tiene 1 reseña.</p>
+
+        <div class="topic-grid">
+          <div class="topic-card reveal" style="--d:150ms">
+            <div class="topic-head">
+              <div class="topic-loc">Laboratorio BIOS<small>Av. Huehuetoca · 2.8★ · 47 reseñas</small></div>
+              <span class="topic-pr alta">Prioridad alta</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Servicio y atención</span><span class="t-val">~45%</span></div><div class="t-track"><div class="t-fill" style="width:45%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Personal</span><span class="t-val">~28%</span></div><div class="t-track"><div class="t-fill" style="width:28%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Resultados y comunicación</span><span class="t-val">~23%</span></div><div class="t-track"><div class="t-fill" style="width:23%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Teléfono y cotizaciones</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Precio</span><span class="t-val">~8%</span></div><div class="t-track"><div class="t-fill" style="width:8%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> el servicio depende demasiado de personas específicas — bueno cuando atiende alguien en particular, inconsistente cuando hay saturación.</div>
+          </div>
+
+          <div class="topic-card reveal" style="--d:190ms">
+            <div class="topic-head">
+              <div class="topic-loc">BIOS — Soriana Paseo La Joya<small>3.0★ · 62 reseñas</small></div>
+              <span class="topic-pr alta">Prioridad media-alta</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Ultrasonidos y especialistas</span><span class="t-val">~30%</span></div><div class="t-track"><div class="t-fill" style="width:30%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Recepción y personal admin.</span><span class="t-val">~23%</span></div><div class="t-track"><div class="t-fill" style="width:23%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Tiempos de espera</span><span class="t-val">~18%</span></div><div class="t-track"><div class="t-fill" style="width:18%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Pagos y costos</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> la experiencia durante los ultrasonidos y el primer contacto en recepción. Sí hay reseñas que reconocen buen trato humano.</div>
+          </div>
+
+          <div class="topic-card reveal" style="--d:230ms">
+            <div class="topic-head">
+              <div class="topic-loc">BIOS Sucursal Cantú<small>2.8★ · 146 reseñas</small></div>
+              <span class="topic-pr critica">Prioridad crítica</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Tiempos de espera</span><span class="t-val">~14%</span></div><div class="t-track"><div class="t-fill" style="width:14%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Ultrasonidos</span><span class="t-val">~10%</span></div><div class="t-track"><div class="t-fill" style="width:10%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Radiografías e interpretación</span><span class="t-val">~7%</span></div><div class="t-track"><div class="t-fill" style="width:7%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Personal de recepción</span><span class="t-val">~6%</span></div><div class="t-track"><div class="t-fill" style="width:6%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Costos y pagos</span><span class="t-val">~5%</span></div><div class="t-track"><div class="t-fill" style="width:5%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Toma de muestras y trato clínico</span><span class="t-val">~5%</span></div><div class="t-track"><div class="t-fill" style="width:5%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Limpieza e instalaciones</span><span class="t-val">~5%</span></div><div class="t-track"><div class="t-fill" style="width:5%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> es la sucursal con más reseñas y la más delicada. No hay un solo tema dominante — se reparte entre recepción, especialistas, toma de muestras, facturación y espera. Debe ser la primera en intervenir.</div>
+          </div>
+
+          <div class="topic-card reveal" style="--d:270ms">
+            <div class="topic-head">
+              <div class="topic-loc">BIOS — San Sebastián / Tepojaco<small>3.5★ · 14 reseñas</small></div>
+              <span class="topic-pr media">Prioridad media</span>
+            </div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Entrega de resultados e interpretaciones</span><span class="t-val">~30%</span></div><div class="t-track"><div class="t-fill" style="width:30%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Ultrasonido y especialista</span><span class="t-val">~23%</span></div><div class="t-track"><div class="t-fill" style="width:23%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Pagos con tarjeta</span><span class="t-val">~18%</span></div><div class="t-track"><div class="t-fill" style="width:18%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Personal</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="t-row"><div class="t-top"><span class="t-lbl">Instalaciones y equipo</span><span class="t-val">~13%</span></div><div class="t-track"><div class="t-fill" style="width:13%"></div></div></div>
+            <div class="topic-foot"><strong>Problema principal:</strong> incumplimiento de fechas prometidas para interpretaciones y falta de terminal bancaria. Es la sucursal mejor calificada, pero con estos dos puntos por corregir.</div>
+          </div>
+        </div>
+
+        <div class="topic-summary reveal" style="--d:310ms">
+          <strong>Lectura general:</strong> la reputación de BIOS no parece estar afectada principalmente por el establecimiento físico, sino por la experiencia operativa — recepción, tiempos de espera, trato de especialistas, entrega de resultados y falta de canales rápidos como WhatsApp.
+          <ol>
+            <li><strong>Sucursal Cantú</strong> — atención inmediata por volumen y variedad de quejas.</li>
+            <li><strong>Av. Huehuetoca</strong> — mejorar recepción, teléfono y entrega de resultados.</li>
+            <li><strong>Soriana Paseo La Joya</strong> — revisar protocolo de ultrasonidos y puntualidad de especialistas.</li>
+            <li><strong>San Sebastián / Tepojaco</strong> — corregir entregas, interpretaciones y medios de pago.</li>
+            <li><strong>Plaza Tauro</strong> — activar solicitud de reseñas desde ya, para construir historial propio.</li>
+          </ol>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ============ CIERRE ============ -->
+  <section class="slide closing" id="s3">
+    <div class="slide-inner">
+      <div class="lockup-big reveal">
+        <img class="bios" src="assets/bios-logo-white.png" alt="Laboratorios BIOS" />
+        <span class="x">×</span>
+        <img class="partum" src="assets/partum-logo-white.png" alt="Partum Design" />
+      </div>
+      <h2 class="reveal" style="--d:160ms">Gracias.</h2>
+      <p class="lede closing-note reveal" style="--d:220ms">Datos tomados de las fichas públicas de Google Maps de cada sucursal, con corte al 6 de agosto de 2026.</p>
+      <div class="back reveal" style="--d:280ms"><button id="backTop">↑ Volver al inicio</button></div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+  var deck = document.getElementById('deck');
+  var slides = Array.prototype.slice.call(document.querySelectorAll('.slide'));
+  var dots = Array.prototype.slice.call(document.querySelectorAll('.dotnav button'));
+  var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  dots.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var el = document.getElementById(btn.getAttribute('data-target'));
+      if (el) el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    });
+  });
+
+  var activeObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        var id = entry.target.id;
+        dots.forEach(function(d){ d.classList.toggle('active', d.getAttribute('data-target') === id); });
+      }
+    });
+  }, { root: deck, threshold: 0.5 });
+  slides.forEach(function(s){ activeObserver.observe(s); });
+
+  var revealObserver = new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { root: deck, threshold: 0.2 });
+  document.querySelectorAll('.reveal').forEach(function(el){ revealObserver.observe(el); });
+
+  document.getElementById('backTop').addEventListener('click', function(){
+    document.getElementById('s0').scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+  });
+
+  deck.addEventListener('keydown', function(e){
+    var idx = slides.findIndex(function(s){
+      var r = s.getBoundingClientRect();
+      return r.top > -r.height/2 && r.top < r.height/2;
+    });
+    if (idx === -1) return;
+    if (e.key === 'ArrowDown' || e.key === 'PageDown'){
+      e.preventDefault();
+      var next = slides[Math.min(idx+1, slides.length-1)];
+      next.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    } else if (e.key === 'ArrowUp' || e.key === 'PageUp'){
+      e.preventDefault();
+      var prev = slides[Math.max(idx-1, 0)];
+      prev.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth' });
+    }
+  });
+  deck.setAttribute('tabindex', '0');
+</script>
+
+</body>
+</html>
